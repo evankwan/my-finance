@@ -84,7 +84,7 @@ const formatExpenseDate = (expense: Expense) => {
 }
 
 .edit-button {
-  padding: 0.2rem 0.6rem;
+  padding: 0 0.6rem;
   margin: 0;
   width: 100%
 }

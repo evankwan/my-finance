@@ -55,8 +55,8 @@ const errorMessages: ComputedRef = computed(() => {
 <template>
   <form id="expense-form" @submit="handleAddExpense">
     <div class="expense-form">
-      <input id="date-input" v-model="date" type="date" name="date-picker" required />
-      <select id="categories" v-model="category" name="categories" required>
+      <input id="date-input" v-model="date" class="date-input" type="date" name="date-picker" required />
+      <select id="categories" v-model="category" name="categories" class="category-input" required>
         <option value="uncategorized">Uncategorized</option>
       </select>
       <input id="title-input" v-model="title" type="text" name="title" placeholder="'Summit Garden'" class="title-input"
@@ -73,19 +73,29 @@ const errorMessages: ComputedRef = computed(() => {
 
 <style scoped>
 .expense-form {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 0.2rem;
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+}
+
+.date-input {
+  grid-column: 1 / span 2;
+}
+
+.category-input {
+  grid-column: 3 / span 2;
 }
 
 .title-input {
   flex-grow: 1;
+  grid-column: 5 / span 5;
 }
 
 .cost-input {
   text-align: right;
   width: 8rem;
+  grid-column: 10 / span 2;
 }
 
 .cost-input::-webkit-outer-spin-button,
@@ -95,6 +105,7 @@ const errorMessages: ComputedRef = computed(() => {
 
 .submit-button {
   justify-self: flex-end;
+  grid-column: 12 / span 1;
 }
 
 .error-messages-container {
