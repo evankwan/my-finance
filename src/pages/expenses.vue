@@ -5,9 +5,9 @@ import ExpenseForm from "../components/ExpenseForm.vue"
 
 <template>
   <div class="expenses-wrapper">
-    <ExpensesHeader />
+    <ExpensesHeader id="expenses-header" />
     <main>
-      <ExpenseForm />
+      <ExpenseForm id="expenses-form" />
     </main>
   </div>
 </template>

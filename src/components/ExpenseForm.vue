@@ -37,6 +37,9 @@ const clearForm = () => {
     <input id="date-input" v-model="date" type="date" name="date-picker" />
     <input id="title-input" v-model="title" type="text" name="title" placeholder="'Summit Garden'"
       class="title-input" />
+    <select id="categories" v-model="category" name="categories">
+      <option value="uncategorized">Uncategorized</option>
+    </select>
     <input id="cost-input" v-model="cost" type="number" name="cost" min="0" step="0.01" placeholder="$0"
       class="cost-input" />
     <button class="submit-button">Enter</button>
@@ -51,7 +54,7 @@ const clearForm = () => {
   align-items: center;
 }
 
-.what-input {
+.title-input {
   flex-grow: 1;
 }
 
