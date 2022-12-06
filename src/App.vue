@@ -3,7 +3,7 @@ import { onMounted } from "vue"
 import SideBar from "./components/Sidebar.vue"
 import { RouterView } from "vue-router"
 
-import { useExpensesStore } from "./store/store"
+import { useExpensesStore } from "./store/expenses"
 
 const ExpensesStore = useExpensesStore()
 

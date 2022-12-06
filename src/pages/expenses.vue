@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ExpensesHeader from "../components/ExpensesHeader.vue"
 import ExpenseForm from "../components/ExpenseForm.vue"
+import ExpensesList from "../components/ExpensesList.vue"
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import ExpenseForm from "../components/ExpenseForm.vue"
     <ExpensesHeader id="expenses-header" />
     <main>
       <ExpenseForm id="expenses-form" />
+      <ExpensesList id="expenses-list" />
     </main>
   </div>
 </template>
