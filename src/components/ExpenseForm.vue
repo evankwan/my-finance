@@ -7,19 +7,23 @@ import type { Expense } from "../types/Expense"
 
 const expensesStore = useExpensesStore()
 
-const title: Ref = ref("");
-const cost: Ref = ref(0);
-const date: Ref = ref(new Date());
-const category: Ref = ref("uncategorized");
+const date: Ref = ref(new Date())
+const category: Ref = ref("uncategorized")
+const title: Ref = ref("")
+const cost: Ref = ref(0)
 
 const handleAddExpense = async (e: Event) => {
   e.preventDefault()
   isShowingError.value = errorMessages.value.length ? true : false
 
+  const offset = new Date(Date.now()).getTimezoneOffset() / 60
+  const expenseDate = new Date(date.value)
+  expenseDate.setHours(expenseDate.getHours() + offset)
+
   const expense: Expense = {
     id: expensesStore.list.length + 1,
-    date: new Date(date.value),
-    cost: cost.value,
+    date: expenseDate,
+    cost: cost.value.toFixed(2),
     title: title.value,
     category: category.value
   }

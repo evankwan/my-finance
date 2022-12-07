@@ -2,20 +2,13 @@
 import { computed } from "vue"
 import type { ComputedRef } from "vue"
 import { useExpensesStore } from "../store/expenses"
-import { getMonthName } from "../utilities/dateHelpers"
 
-import type { Expense } from "../types/Expense"
+import ExpenseItem from "./ExpenseItem.vue"
+
 
 const expensesStore = useExpensesStore()
 const list: ComputedRef = computed(() => expensesStore.list)
 
-const formatExpenseDate = (expense: Expense) => {
-  const month = getMonthName(expense.date?.getMonth())
-  const date = expense.date.getDate()
-  const year = expense.date.getFullYear()
-
-  return `${month} ${date}, ${year}`
-}
 </script>
 
 <template>
@@ -26,15 +19,7 @@ const formatExpenseDate = (expense: Expense) => {
       <th id="title-col" class="title-col">Name</th>
       <th id="cost-col" class="cost-col">Cost</th>
     </tr>
-    <tr v-for="expense in list" class="table-grid">
-      <td class="date-col">
-        {{ formatExpenseDate(expense) }}
-      </td>
-      <td class="category-col">{{ `${expense.category}` }}</td>
-      <td class="title-col">{{ expense.title }}</td>
-      <td class="cost-col">${{ expense.cost }}</td>
-      <td class="action-col"><button class="edit-button">edit</button></td>
-    </tr>
+    <ExpenseItem v-for="expense in list" :expense="expense" />
   </table>
 </template>
 
@@ -81,11 +66,5 @@ const formatExpenseDate = (expense: Expense) => {
 
 .action-col {
   grid-column: 12 / span 1;
-}
-
-.edit-button {
-  padding: 0 0.6rem;
-  margin: 0;
-  width: 100%
 }
 </style>
