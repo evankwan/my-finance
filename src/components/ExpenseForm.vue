@@ -3,6 +3,8 @@ import { ref, computed, onMounted } from "vue"
 import type { Ref, ComputedRef } from "vue"
 
 import { useExpensesStore } from "../store/expenses";
+
+import { formatDateToTimestamp } from "../utilities/dateHelpers"
 import type { Expense } from "../types/Expense"
 
 const expensesStore = useExpensesStore()
@@ -22,7 +24,7 @@ const handleAddExpense = async (e: Event) => {
 
   const expense: Expense = {
     id: expensesStore.list.length + 1,
-    date: expenseDate,
+    date: formatDateToTimestamp(expenseDate),
     cost: cost.value.toFixed(2),
     title: title.value,
     category: category.value

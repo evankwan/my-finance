@@ -3,6 +3,6 @@ export interface Expense {
 
   category: string;
   cost: number;
-  date: Date;
+  date: number; // timestamp
   title: string;
 }

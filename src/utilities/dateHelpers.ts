@@ -42,3 +42,11 @@ export const getMonthName = (index: number) => {
   }
   return name
 }
+
+export const formatDateToTimestamp = (date: Date) => {
+  return Number(date * 1000);
+}
+
+export const formatTimestampToDate = (timestamp: number) => {
+  return new Date(timestamp / 1000);
+}

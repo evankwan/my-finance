@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest"
 import { mount, flushPromises } from "@vue/test-utils"
 import { createTestingPinia } from "@pinia/testing"
 import ExpensesList from "./ExpensesList.vue"
+import { formatDateToTimestamp } from "../utilities/dateHelpers"
 
 import type { VueWrapper } from "@vue/test-utils"
 import type { Expense } from "../types/Expense"
@@ -27,7 +28,7 @@ describe("ExpensesList", () => {
     id: 1,
     category: "uncategorized",
     cost: 34.16,
-    date: new Date(),
+    date: formatDateToTimestamp(new Date()),
     title: "Leafs Sweater"
   }
   it("adds a list item for each item in the expenses list", async () => {

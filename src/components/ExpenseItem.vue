@@ -2,7 +2,7 @@
 import type { ComputedRef, Ref } from "vue"
 import type { Expense } from "../types/Expense"
 import { defineProps, computed, ref } from "vue"
-import { getMonthName } from "../utilities/dateHelpers"
+import { getMonthName, formatTimestampToDate } from "../utilities/dateHelpers"
 
 const props = defineProps<{
   expense?: Expense,
@@ -15,10 +15,11 @@ const expense: ComputedRef = computed(() => props.expense ?? {
 })
 
 const expenseDate = computed(() => {
-  const num = expense.value.date.getUTCDate();
-  const month = expense.value.date.getUTCMonth() + 1
+  const convertedDate = formatTimestampToDate(expense.value.date)
+  const num = convertedDate.getUTCDate();
+  const month = convertedDate.getUTCMonth() + 1
   const date = `${num < 10 ? "0" + num : num}`
-  const year = expense.value.date.getUTCFullYear()
+  const year = convertedDate.getUTCFullYear()
   return `${year}-${month}-${date}`
 })
 </script>
