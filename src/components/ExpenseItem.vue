@@ -2,6 +2,11 @@
 import { computed, toRef } from "vue"
 import { debounce } from "lodash"
 import { formatDateToTimestamp, formatTimestampToDate } from "../utilities/dateHelpers"
+import { useExpensesStore } from "../store/expenses"
+
+const expensesStore = useExpensesStore()
+
+const categories = computed(() => expensesStore.categories)
 
 const props = defineProps({
   expense: {
@@ -32,6 +37,10 @@ const expenseDate = computed({
     generateDateString(newVal)
   },
 });
+const expenseCategory = computed({
+  get: () => expensesStore.categories.find((c) => c.id === expenseRef.value.category).id,
+  set: (newVal) => expenseRef.value.category = newVal
+})
 
 const saveExpense = debounce(() => {
   emit("saveExpense", {
@@ -47,9 +56,9 @@ const saveExpense = debounce(() => {
         name="date-picker" required @change="saveExpense" />
     </td>
     <td class="category-col">
-      <select :id="`editing-date-input-${expenseRef.id}`" v-model="expenseRef.category" name="categories"
+      <select :id="`editing-date-input-${expenseRef.id}`" v-model="expenseCategory" name="categories"
         class="category-input" required @change="saveExpense">
-        <option value="uncategorized">Uncategorized</option>
+        <option v-for="c in categories" :value="c.id">{{ c.name }}</option>
       </select>
     </td>
     <td class="title-col">
