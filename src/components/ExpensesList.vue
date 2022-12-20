@@ -6,7 +6,6 @@ import ExpenseItem from "./ExpenseItem.vue"
 
 
 const expensesStore = useExpensesStore()
-console.log(expensesStore.categories)
 
 const list = computed(() => expensesStore.list)
 

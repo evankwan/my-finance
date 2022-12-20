@@ -11,7 +11,7 @@ export default {
     return await db.select("SELECT * FROM categories")
   },
   add: async ({ expense }) => {
-    const { date, title, category, cost } = expense;
+    const { date, title, category, cost } = expense
     console.log({ date, title, category, cost })
     const db = await Database.connect()
     await db.execute("INSERT INTO expenses (date, category, title, cost) VALUES ($1,$2,$3,$4)", [
