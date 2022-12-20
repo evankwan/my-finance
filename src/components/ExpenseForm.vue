@@ -23,7 +23,6 @@ const handleAddExpense = async (e) => {
   expenseDate.setHours(expenseDate.getHours() + offset)
 
   const chosenCategory = categories.value.find((c) => c.id === category.value)
-  console.log(chosenCategory)
   const expense = {
     id: expensesStore.list.length + 1,
     date: formatDateToTimestamp(expenseDate),
