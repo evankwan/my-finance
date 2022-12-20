@@ -1,14 +1,13 @@
-import ExpenseForm from "./ExpenseForm.vue"
+import ExpensesHeader from "./ExpensesHeader.vue"
 
 import { mount } from "@vue/test-utils"
-import type { VueWrapper } from "@vue/test-utils"
 import { describe, it, expect } from "vitest"
 
-describe("ExpenseForm", () => {
+describe("ExpensesHeader", () => {
   const getWrapper = () => {
-    return mount(ExpenseForm, {
+    return mount(ExpensesHeader, {
       shallow: true,
-    })
+    });
   }
   it("runs", () => {
     getWrapper();

@@ -1,13 +1,15 @@
-<script setup lang="ts">
+<script setup>
 import ExpensesHeader from "../components/ExpensesHeader.vue"
 import ExpenseForm from "../components/ExpenseForm.vue"
+import ExpensesList from "../components/ExpensesList.vue"
 </script>
 
 <template>
   <div class="expenses-wrapper">
-    <ExpensesHeader />
+    <ExpensesHeader id="expenses-header" />
     <main>
-      <ExpenseForm />
+      <ExpenseForm id="expenses-form" />
+      <ExpensesList id="expenses-list" />
     </main>
   </div>
 </template>
