@@ -9,6 +9,7 @@ export const useExpensesStore = defineStore("expenses", () => {
   const getExpenses = async () => {
     try {
       const result = await ExpensesAPI.getAll()
+      console.log({ result })
       list.value = [...result]
     } catch (error) {
       console.error({ error })
@@ -25,7 +26,6 @@ export const useExpensesStore = defineStore("expenses", () => {
   const add = async ({ expense }) => {
     try {
       const result = await ExpensesAPI.add({ expense })
-      console.log({ result })
       list.value = [
         ...list.value,
         expense

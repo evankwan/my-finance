@@ -31,6 +31,7 @@ const handleAddExpense = async (e) => {
     category: chosenCategory.id
   }
   await expensesStore.add({ expense })
+  await expensesStore.getExpenses();
   clearForm()
 }
 const clearForm = () => {
