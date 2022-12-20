@@ -66,7 +66,7 @@ const saveExpense = debounce(() => {
         class="title-input" required @input="saveExpense" />
     </td>
     <td class="cost-col">
-      <input id="cost-input" v-model="expenseRef.cost" type="number" name="cost" min="0" step="0.01" placeholder="$0"
+      <input id="cost-input" v-model="expenseRef.cost" type="number" name="cost" min="0" step="0.01" placeholder="0"
         class="cost-input" required @input="saveExpense" />
     </td>
   </tr>
