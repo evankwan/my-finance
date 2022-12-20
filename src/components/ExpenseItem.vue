@@ -1,29 +1,43 @@
 <script setup>
-import { computed, defineEmits, toRef } from "vue"
+import { computed, defineEmits, toRef, nextTick } from "vue"
 import { debounce } from "lodash"
 import { formatDateToTimestamp, formatTimestampToDate } from "../utilities/dateHelpers"
 
 const props = defineProps({
-  expense: Object,
+  expense: {
+    required: true,
+    type: Object
+  },
 })
 
 const emit = defineEmits(["saveExpense"])
 
 const expenseRef = toRef(props, "expense")
 
-const expenseDate = computed(() => {
-  const convertedDate = formatTimestampToDate(expenseRef.value.date)
+const generateDateString = (v) => {
+  const convertedDate = formatTimestampToDate(v)
   const num = convertedDate.getUTCDate()
   const month = convertedDate.getUTCMonth() + 1
   const date = `${num < 10 ? "0" + num : num}`
   const year = convertedDate.getUTCFullYear()
   return `${year}-${month}-${date}`
-})
+}
+const expenseDate = computed({
+  get: () => generateDateString(expenseRef.value.date),
+  set: (newVal) => {
+    const offset = new Date(Date.now()).getTimezoneOffset() / 60
+    const expenseDate = new Date(newVal)
+    expenseDate.setHours(expenseDate.getHours() + offset)
+    expenseRef.value.date = formatDateToTimestamp(expenseDate)
+    generateDateString(newVal)
+  },
+});
 
 const saveExpense = debounce(() => {
-  console.log("debounced")
-  emit("saveExpense")
-}, 500)
+  emit("saveExpense", {
+    expense: expenseRef.value
+  })
+}, 300)
 </script>
 
 <template>
@@ -39,11 +53,11 @@ const saveExpense = debounce(() => {
       </select>
     </td>
     <td class="title-col">
-      <input id="title-input" :value="expenseRef.title" type="text" name="title" placeholder="'Summit Garden'"
+      <input id="title-input" v-model="expenseRef.title" type="text" name="title" placeholder="'Summit Garden'"
         class="title-input" required @input="saveExpense" />
     </td>
     <td class="cost-col">
-      <input id="cost-input" :value="expenseRef.cost" type="number" name="cost" min="0" step="0.01" placeholder="$0"
+      <input id="cost-input" v-model="expenseRef.cost" type="number" name="cost" min="0" step="0.01" placeholder="$0"
         class="cost-input" required @input="saveExpense" />
     </td>
   </tr>

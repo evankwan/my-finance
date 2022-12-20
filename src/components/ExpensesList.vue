@@ -8,6 +8,9 @@ import ExpenseItem from "./ExpenseItem.vue"
 const expensesStore = useExpensesStore()
 const list = computed(() => expensesStore.list)
 
+const handleUpdatedExpense = async ({ expense }) => {
+  await expensesStore.saveExpense({ expense })
+}
 </script>
 
 <template>
@@ -18,7 +21,7 @@ const list = computed(() => expensesStore.list)
       <th id="title-col" class="title-col">Name</th>
       <th id="cost-col" class="cost-col">Cost</th>
     </tr>
-    <ExpenseItem v-for="expense in list" :expense="expense" />
+    <ExpenseItem v-for="expense in list" :expense="expense" @save-expense="handleUpdatedExpense" />
   </table>
 </template>
 

@@ -20,16 +20,15 @@ export const useExpensesStore = defineStore("expenses", () => {
         ...list.value,
         payload.expense
       ]
-      console.log(list.value)
     } catch (error) {
       console.error(error)
     }
   }
 
-  const saveExpense = async (index, expense) => {
+  const saveExpense = async ({ expense }) => {
     try {
-      list.value[index] = expense
-      console.log(list.value[index])
+      const index = list.value.findIndex((e) => e.id === expense.id)
+      list.value.splice(index, 1, expense)
     } catch (error) {
       console.error(error)
     }
