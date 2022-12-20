@@ -1,11 +1,9 @@
 import { defineStore } from "pinia"
-import { Expense } from "../types/Expense"
 import ExpensesAPI from "../api/ExpensesAPI"
 import { ref } from "vue"
-import type { Ref } from "vue"
 
 export const useExpensesStore = defineStore("expenses", () => {
-  const list: Ref = ref([]);
+  const list = ref([]);
 
   const getExpenses = async () => {
     try {
@@ -15,7 +13,7 @@ export const useExpensesStore = defineStore("expenses", () => {
       console.error({ error })
     }
   }
-  const add = async (payload: { expense: Expense }) => {
+  const add = async (payload) => {
     try {
       // const result: Expense = await ExpensesAPI.add(payload)
       list.value = [
@@ -28,9 +26,19 @@ export const useExpensesStore = defineStore("expenses", () => {
     }
   }
 
+  const saveExpense = async (index, expense) => {
+    try {
+      list.value[index] = expense
+      console.log(list.value[index])
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     list,
     getExpenses,
     add,
+    saveExpense,
   }
 })

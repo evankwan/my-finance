@@ -3,7 +3,6 @@ import ExpenseForm from "./ExpenseForm.vue"
 import { mount, flushPromises } from "@vue/test-utils"
 import { describe, it, expect } from "vitest"
 import { createTestingPinia } from "@pinia/testing"
-import type { VueWrapper } from "@vue/test-utils"
 
 import { useExpensesStore } from "../store/expenses"
 
@@ -18,8 +17,8 @@ describe("ExpenseForm", () => {
   }
 
   it("adds a new expense to the store when submitting the form", async () => {
-    const wrapper: VueWrapper = getWrapper()
-    const expectedData: any = {
+    const wrapper = getWrapper()
+    const expectedData = {
       date: "2022-12-05",
       cost: 100.34,
       title: "Leafs Jersey",
@@ -41,7 +40,7 @@ describe("ExpenseForm", () => {
     );
   })
   it("clears the form after the form is submitted", async () => {
-    const wrapper: VueWrapper = getWrapper()
+    const wrapper = getWrapper()
     const $dateInput = wrapper.find("#date-input")
     const $titleInput = wrapper.find("#title-input")
     const $costInput = wrapper.find("#cost-input")
@@ -57,7 +56,7 @@ describe("ExpenseForm", () => {
     expect(Number($costInput.element.value)).toBe(0)
   })
   it("validates form values and shows error messages if there is no expense title", async () => {
-    const wrapper: VueWrapper = getWrapper()
+    const wrapper = getWrapper()
     const $form = wrapper.find("#expense-form")
     $form.trigger("submit")
     await flushPromises()
@@ -68,7 +67,7 @@ describe("ExpenseForm", () => {
     expect($errorMessages).toHaveLength(1)
   })
   it("validates form values and shows an error message if the expense cost is not a number", async () => {
-    const wrapper: VueWrapper = getWrapper()
+    const wrapper = getWrapper()
     const $form = wrapper.find("#expense-form")
     const $costInput = wrapper.find("#cost-input")
 

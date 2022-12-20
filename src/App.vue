@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { onMounted } from "vue"
 import SideBar from "./components/Sidebar.vue"
 import { RouterView } from "vue-router"

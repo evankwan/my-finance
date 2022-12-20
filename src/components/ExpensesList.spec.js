@@ -4,9 +4,6 @@ import { createTestingPinia } from "@pinia/testing"
 import ExpensesList from "./ExpensesList.vue"
 import { formatDateToTimestamp } from "../utilities/dateHelpers"
 
-import type { VueWrapper } from "@vue/test-utils"
-import type { Expense } from "../types/Expense"
-
 import { useExpensesStore } from "../store/expenses"
 
 describe("ExpensesList", () => {
@@ -24,7 +21,7 @@ describe("ExpensesList", () => {
       }
     })
   }
-  const expense: Expense = {
+  const expense = {
     id: 1,
     category: "uncategorized",
     cost: 34.16,
@@ -32,7 +29,7 @@ describe("ExpensesList", () => {
     title: "Leafs Sweater"
   }
   it("adds a list item for each item in the expenses list", async () => {
-    const wrapper: VueWrapper = getWrapper()
+    const wrapper = getWrapper()
     const $expenses = wrapper.findAll(".expense")
     const expensesStore = useExpensesStore()
     expect($expenses.length).not.toBe(0)

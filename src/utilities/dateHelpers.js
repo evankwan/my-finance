@@ -1,4 +1,4 @@
-export const getMonthName = (index: number) => {
+export const getMonthName = (index) => {
   let name;
   switch (index) {
     case 0:
@@ -43,10 +43,10 @@ export const getMonthName = (index: number) => {
   return name
 }
 
-export const formatDateToTimestamp = (date: Date) => {
+export const formatDateToTimestamp = (date) => {
   return Number(date * 1000);
 }
 
-export const formatTimestampToDate = (timestamp: number) => {
+export const formatTimestampToDate = (timestamp) => {
   return new Date(timestamp / 1000);
 }

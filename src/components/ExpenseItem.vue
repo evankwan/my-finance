@@ -1,48 +1,50 @@
-<script setup lang="ts">
-import type { ComputedRef, Ref } from "vue"
-import type { Expense } from "../types/Expense"
-import { defineProps, computed, ref } from "vue"
-import { getMonthName, formatTimestampToDate } from "../utilities/dateHelpers"
+<script setup>
+import { computed, defineEmits, toRef } from "vue"
+import { debounce } from "lodash"
+import { formatDateToTimestamp, formatTimestampToDate } from "../utilities/dateHelpers"
 
-const props = defineProps<{
-  expense?: Expense,
-}>()
-const expense: ComputedRef = computed(() => props.expense ?? {
-  id: 1,
-  category: "uncategorized",
-  title: "title",
-  cost: 0
+const props = defineProps({
+  expense: Object,
 })
 
+const emit = defineEmits(["saveExpense"])
+
+const expenseRef = toRef(props, "expense")
+
 const expenseDate = computed(() => {
-  const convertedDate = formatTimestampToDate(expense.value.date)
-  const num = convertedDate.getUTCDate();
+  const convertedDate = formatTimestampToDate(expenseRef.value.date)
+  const num = convertedDate.getUTCDate()
   const month = convertedDate.getUTCMonth() + 1
   const date = `${num < 10 ? "0" + num : num}`
   const year = convertedDate.getUTCFullYear()
   return `${year}-${month}-${date}`
 })
+
+const saveExpense = debounce(() => {
+  console.log("debounced")
+  emit("saveExpense")
+}, 500)
 </script>
 
 <template>
   <tr class="table-grid">
     <td class="date-col">
-      <input :id="`editing-date-input-${expense.id}`" :value="expenseDate" class="date-input" type="date"
-        name="date-picker" required />
+      <input :id="`editing-date-input-${expenseRef.id}`" v-model="expenseDate" class="date-input" type="date"
+        name="date-picker" required @change="saveExpense" />
     </td>
     <td class="category-col">
-      <select :id="`editing-date-input-${expense.id}`" :value="expense.category" name="categories"
-        class="category-input" required>
+      <select :id="`editing-date-input-${expenseRef.id}`" v-model="expenseRef.category" name="categories"
+        class="category-input" required @change="saveExpense">
         <option value="uncategorized">Uncategorized</option>
       </select>
     </td>
     <td class="title-col">
-      <input id="title-input" :value="expense.title" type="text" name="title" placeholder="'Summit Garden'"
-        class="title-input" required />
+      <input id="title-input" :value="expenseRef.title" type="text" name="title" placeholder="'Summit Garden'"
+        class="title-input" required @input="saveExpense" />
     </td>
     <td class="cost-col">
-      <input id="cost-input" :value="expense.cost" type="number" name="cost" min="0" step="0.01" placeholder="$0"
-        class="cost-input" required />
+      <input id="cost-input" :value="expenseRef.cost" type="number" name="cost" min="0" step="0.01" placeholder="$0"
+        class="cost-input" required @input="saveExpense" />
     </td>
   </tr>
 </template>

@@ -1,7 +1,6 @@
 import expenses from "./expenses.vue"
 
 import { mount } from "@vue/test-utils"
-import type { VueWrapper } from "@vue/test-utils"
 import { createTestingPinia } from "@pinia/testing"
 import { describe, it, expect } from "vitest"
 
@@ -16,7 +15,7 @@ describe("expenses.vue", () => {
     })
   }
   it("renders the expenses header and form", () => {
-    const wrapper: VueWrapper = getWrapper()
+    const wrapper = getWrapper()
     const $header = wrapper.find("#expenses-header")
     const $form = wrapper.find("#expenses-form")
 

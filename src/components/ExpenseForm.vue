@@ -1,20 +1,18 @@
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted } from "vue"
-import type { Ref, ComputedRef } from "vue"
 
 import { useExpensesStore } from "../store/expenses";
 
 import { formatDateToTimestamp } from "../utilities/dateHelpers"
-import type { Expense } from "../types/Expense"
 
 const expensesStore = useExpensesStore()
 
-const date: Ref = ref(new Date())
-const category: Ref = ref("uncategorized")
-const title: Ref = ref("")
-const cost: Ref = ref(0)
+const date = ref(new Date())
+const category = ref("uncategorized")
+const title = ref("")
+const cost = ref(0)
 
-const handleAddExpense = async (e: Event) => {
+const handleAddExpense = async (e) => {
   e.preventDefault()
   isShowingError.value = errorMessages.value.length ? true : false
 
@@ -22,7 +20,7 @@ const handleAddExpense = async (e: Event) => {
   const expenseDate = new Date(date.value)
   expenseDate.setHours(expenseDate.getHours() + offset)
 
-  const expense: Expense = {
+  const expense = {
     id: expensesStore.list.length + 1,
     date: formatDateToTimestamp(expenseDate),
     cost: cost.value.toFixed(2),
@@ -38,9 +36,9 @@ const clearForm = () => {
   category.value = "uncategorized"
 }
 
-const isShowingError: Ref = ref(false)
-const errorMessages: ComputedRef = computed(() => {
-  const messages: string[] = []
+const isShowingError = ref(false)
+const errorMessages = computed(() => {
+  const messages = []
 
   if (!title.value.length) {
     messages.push("Your expense name field must have at least 1 character")

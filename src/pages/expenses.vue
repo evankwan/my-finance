@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import ExpensesHeader from "../components/ExpensesHeader.vue"
 import ExpenseForm from "../components/ExpenseForm.vue"
 import ExpensesList from "../components/ExpensesList.vue"

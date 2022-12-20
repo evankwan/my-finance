@@ -1,13 +1,12 @@
-<script setup lang="ts">
+<script setup>
 import { computed } from "vue"
-import type { ComputedRef } from "vue"
 import { useExpensesStore } from "../store/expenses"
 
 import ExpenseItem from "./ExpenseItem.vue"
 
 
 const expensesStore = useExpensesStore()
-const list: ComputedRef = computed(() => expensesStore.list)
+const list = computed(() => expensesStore.list)
 
 </script>
 

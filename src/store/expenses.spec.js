@@ -3,7 +3,6 @@ import { describe, expect, it, beforeEach } from "vitest"
 import { flushPromises } from "@vue/test-utils"
 import { useExpensesStore } from "./expenses"
 
-import type { Expense } from "../types/Expense"
 
 describe("expenses store", () => {
   beforeEach(() => {
@@ -11,7 +10,7 @@ describe("expenses store", () => {
   })
   describe("actions", () => {
     describe("add", () => {
-      const expense: Expense = {
+      const expense = {
         id: 1,
         category: "uncategorized",
         cost: 34.16,
