@@ -36,7 +36,7 @@ const handleAddExpense = async (e) => {
 const clearForm = () => {
   title.value = ""
   cost.value = 0
-  category.value = 0
+  category.value = 1
 }
 
 const isShowingError = ref(false)

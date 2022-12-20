@@ -22,16 +22,16 @@ export const useExpensesStore = defineStore("expenses", () => {
       console.error({ error })
     }
   }
-  const add = async (payload) => {
+  const add = async ({ expense }) => {
     try {
-      const result = await ExpensesAPI.add(payload)
+      const result = await ExpensesAPI.add({ expense })
       console.log({ result })
       list.value = [
         ...list.value,
-        payload.expense
+        expense
       ]
     } catch (error) {
-      console.error(error)
+      console.error({ error })
     }
   }
 
