@@ -17,7 +17,6 @@ export const useExpensesStore = defineStore("expenses", () => {
   const getCategories = async () => {
     try {
       const result = await ExpensesAPI.getCategories()
-      console.log({ result })
       categories.value = [...result]
     } catch (error) {
       console.error({ error })
