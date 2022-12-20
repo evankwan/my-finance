@@ -25,7 +25,7 @@ export const useExpensesStore = defineStore("expenses", () => {
   }
   const add = async ({ expense }) => {
     try {
-      const result = await ExpensesAPI.add({ expense })
+      await ExpensesAPI.add({ expense })
       list.value = [
         ...list.value,
         expense
