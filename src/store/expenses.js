@@ -3,19 +3,30 @@ import ExpensesAPI from "../api/ExpensesAPI"
 import { ref } from "vue"
 
 export const useExpensesStore = defineStore("expenses", () => {
-  const list = ref([]);
+  const list = ref([])
+  const categories = ref([])
 
   const getExpenses = async () => {
     try {
       const result = await ExpensesAPI.getAll()
+      list.value = [...result]
+    } catch (error) {
+      console.error({ error })
+    }
+  }
+  const getCategories = async () => {
+    try {
+      const result = await ExpensesAPI.getCategories()
       console.log({ result })
+      categories.value = [...result]
     } catch (error) {
       console.error({ error })
     }
   }
   const add = async (payload) => {
     try {
-      // const result: Expense = await ExpensesAPI.add(payload)
+      const result = await ExpensesAPI.add(payload)
+      console.log({ result })
       list.value = [
         ...list.value,
         payload.expense
@@ -36,6 +47,8 @@ export const useExpensesStore = defineStore("expenses", () => {
 
   return {
     list,
+    categories,
+    getCategories,
     getExpenses,
     add,
     saveExpense,

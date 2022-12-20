@@ -8,7 +8,7 @@ export default defineConfig({
     vue(),
     AutoImport({
       imports: ['vitest'],
-      dts: true,
+      dts: false,
     }),
   ],
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`

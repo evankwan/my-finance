@@ -7,7 +7,12 @@ import { useExpensesStore } from "./store/expenses"
 
 const ExpensesStore = useExpensesStore()
 
-onMounted(() => ExpensesStore.getExpenses())
+onMounted(async () => {
+  await Promise.all([
+    ExpensesStore.getCategories(),
+    ExpensesStore.getExpenses()
+  ])
+})
 </script>
 
 <template>
