@@ -8,7 +8,7 @@ import { formatDateToTimestamp } from "../utilities/dateHelpers"
 const expensesStore = useExpensesStore()
 
 const date = ref(new Date())
-const category = ref("uncategorized")
+const category = ref("")
 const title = ref("")
 const cost = ref(0)
 

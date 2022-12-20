@@ -18,8 +18,8 @@ fn main() {
                     kind: MigrationKind::Up,
                 },
                 Migration {
-                    version: 1,
-                    description: "create expenses",
+                    version: 2,
+                    description: "create uncategorized category",
                     sql: include_str!("../migrations/2.sql"),
                     kind: MigrationKind::Up,
                 },
