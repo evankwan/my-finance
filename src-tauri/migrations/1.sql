@@ -1,0 +1,13 @@
+CREATE TABLE expenses (
+  id VARCHAR(36) NOT NULL PRIMARY KEY,
+  date TIMESTAMP NOT NULL,
+  category VARCHAR(256) NOT NULL,
+  title VARCHAR(256) NOT NULL,
+  cost DOUBLE(13, 2) NOT NULL
+  FOREIGN KEY (category) REFERENCES categories(name)
+);
+
+CREATE TABLE categories (
+  id VARCHAR(36) NOT NULL PRIMARY KEY,
+  name VARCHAR(36) NOT NULL
+);
