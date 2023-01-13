@@ -1,4 +1,4 @@
-import Database from "../services/database"
+import Database from "../services/Database"
 
 
 export default {
