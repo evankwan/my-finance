@@ -1,0 +1,18 @@
+DROP TABLE categories;
+DROP TABLE expenses;
+
+CREATE TABLE categories (
+  id INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE expenses (
+  id INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+  date INTEGER NOT NULL,
+  category INT,
+  title VARCHAR(255) NOT NULL,
+  cost DOUBLE(13, 2) NOT NULL,
+  CONSTRAINT FK_ExpenseCategory FOREIGN KEY (category) REFERENCES categories(id)
+);
+
+INSERT INTO categories (name) VALUES ("Uncategorized");

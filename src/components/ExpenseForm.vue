@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from "vue"
+import { ref, computed } from "vue"
 
 import { useExpensesStore } from "../store/expenses";
 
@@ -7,8 +7,10 @@ import { formatDateToTimestamp } from "../utilities/dateHelpers"
 
 const expensesStore = useExpensesStore()
 
+const categories = computed(() => expensesStore.categories)
+
 const date = ref(new Date())
-const category = ref("uncategorized")
+const category = ref(1)
 const title = ref("")
 const cost = ref(0)
 
@@ -20,20 +22,22 @@ const handleAddExpense = async (e) => {
   const expenseDate = new Date(date.value)
   expenseDate.setHours(expenseDate.getHours() + offset)
 
+  const chosenCategory = categories.value.find((c) => c.id === category.value)
   const expense = {
     id: expensesStore.list.length + 1,
     date: formatDateToTimestamp(expenseDate),
     cost: cost.value.toFixed(2),
     title: title.value,
-    category: category.value
+    category: chosenCategory.id
   }
   await expensesStore.add({ expense })
+  await expensesStore.getExpenses();
   clearForm()
 }
 const clearForm = () => {
   title.value = ""
   cost.value = 0
-  category.value = "uncategorized"
+  category.value = 1
 }
 
 const isShowingError = ref(false)
@@ -46,7 +50,7 @@ const errorMessages = computed(() => {
   if (typeof cost.value !== "number") {
     messages.push("You must enter a number in the cost field")
   }
-  if (typeof category.value !== "string") {
+  if (typeof category.value !== "number") {
     messages.push("You must enter a valid category")
   }
   if (!messages.length) {
@@ -61,7 +65,7 @@ const errorMessages = computed(() => {
     <div class="expense-form">
       <input id="date-input" v-model="date" class="date-input" type="date" name="date-picker" required />
       <select id="categories" v-model="category" name="categories" class="category-input" required>
-        <option value="uncategorized">Uncategorized</option>
+        <option v-for="c in categories" :value="c.id">{{ c.name }}</option>
       </select>
       <input id="title-input" v-model="title" type="text" name="title" placeholder="'Summit Garden'" class="title-input"
         required />
@@ -88,12 +92,12 @@ const errorMessages = computed(() => {
 }
 
 .category-input {
-  grid-column: 3 / span 2;
+  grid-column: 3 / span 3;
 }
 
 .title-input {
   flex-grow: 1;
-  grid-column: 5 / span 5;
+  grid-column: 6 / span 4;
 }
 
 .cost-input {

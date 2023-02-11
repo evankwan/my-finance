@@ -1,0 +1,13 @@
+CREATE TABLE categories (
+  id INT NOT NULL UNIQUE PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE expenses (
+  id INT NOT NULL UNIQUE PRIMARY KEY,
+  date TIMESTAMP NOT NULL,
+  category INT,
+  title VARCHAR(255) NOT NULL,
+  cost DOUBLE(13, 2) NOT NULL,
+  CONSTRAINT FK_ExpenseCategory FOREIGN KEY (category) REFERENCES categories(id)
+);

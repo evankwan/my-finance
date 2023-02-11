@@ -6,6 +6,7 @@ import ExpenseItem from "./ExpenseItem.vue"
 
 
 const expensesStore = useExpensesStore()
+
 const list = computed(() => expensesStore.list)
 
 const handleUpdatedExpense = async ({ expense }) => {
@@ -48,11 +49,11 @@ const handleUpdatedExpense = async ({ expense }) => {
 }
 
 .category-col {
-  grid-column: 3 / span 2;
+  grid-column: 3 / span 3;
 }
 
 .title-col {
-  grid-column: 5 / span 5;
+  grid-column: 6 / span 4;
 }
 
 .date-col,

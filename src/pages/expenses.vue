@@ -1,7 +1,15 @@
 <script setup>
+import { onMounted } from "vue"
 import ExpensesHeader from "../components/ExpensesHeader.vue"
 import ExpenseForm from "../components/ExpenseForm.vue"
 import ExpensesList from "../components/ExpensesList.vue"
+
+import { useExpensesStore } from "../store/expenses"
+
+onMounted(async () => {
+  const expensesStore = useExpensesStore()
+  await expensesStore.getCategories()
+})
 </script>
 
 <template>
