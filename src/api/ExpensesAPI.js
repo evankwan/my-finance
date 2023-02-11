@@ -1,14 +1,13 @@
 import Database from "../services/Database"
 
-
 export default {
   getAll: async () => {
     const db = await Database.connect()
-    return await db.select("SELECT * FROM expenses")
+    return db.select("SELECT * FROM expenses")
   },
   getCategories: async () => {
     const db = await Database.connect()
-    return await db.select("SELECT * FROM categories")
+    return db.select("SELECT * FROM categories")
   },
   add: async ({ expense }) => {
     const { date, title, category, cost } = expense
