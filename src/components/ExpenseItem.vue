@@ -4,9 +4,7 @@ import { debounce } from "lodash"
 import { formatDateToTimestamp, formatTimestampToDate } from "../utilities/dateHelpers"
 import { useExpensesStore } from "../store/expenses"
 
-const expensesStore = useExpensesStore()
-
-const categories = computed(() => expensesStore.categories)
+const emit = defineEmits(["saveExpense"])
 
 const props = defineProps({
   expense: {
@@ -14,27 +12,36 @@ const props = defineProps({
     type: Object
   },
 })
-
-const emit = defineEmits(["saveExpense"])
-
 const expenseRef = toRef(props, "expense")
-const generateDateString = (v) => {
-  const num = v.getUTCDate()
-  const monthNumber = v.getUTCMonth() + 1
+
+const expensesStore = useExpensesStore()
+
+const dateRef = ref(null)
+watch(dateRef, (el) => {
+  console.log("change");
+  const val = expenseRef.value.date
+  const num = val.getUTCDate()
+  const monthNumber = val.getUTCMonth() + 1
   const month = (monthNumber) < 10 ? `0${monthNumber}` : monthNumber
   const date = `${num < 10 ? "0" + num : num}`
-  const year = v.getUTCFullYear()
-  return `${year}-${month}-${date}`
-}
-const expenseCategory = computed({
-  get: () => expensesStore.categories.find((c) => c.id === expenseRef.value.category).id,
-  set: (newVal) => expenseRef.value.category = newVal
+  const year = val.getUTCFullYear()
+  el.value = `${year}-${month}-${date}`
 })
 
-const expenseDateInput = ref(null);
-watch(expenseDateInput, (el) => {
-  console.log(generateDateString(expenseRef.value.date))
-  el.value = generateDateString(expenseRef.value.date)
+const categories = computed(() => expensesStore.categories)
+const categoryRef = ref(null)
+watch(categoryRef, (el) => {
+  el.value = categories.value.find((c) => c.id === expenseRef.value.category).id
+})
+
+const titleRef = ref(null)
+watch(titleRef, (el) => {
+  el.value = expenseRef.value.title
+})
+
+const costRef = ref(null)
+watch(costRef, (el) => {
+  el.value = expenseRef.value.cost
 })
 
 const saveExpense = debounce(() => {
@@ -47,21 +54,21 @@ const saveExpense = debounce(() => {
 <template>
   <tr class="table-grid">
     <td class="date-col">
-      <input :id="`editing-date-input-${expenseRef.id}`" ref="expenseDateInput" class="date-input" type="date"
-        name="date-picker" required @change="saveExpense" />
+      <input :id="`editing-date-input-${expenseRef.id}`" ref="dateRef" class="date-input" type="date" name="date-picker"
+        required @change="saveExpense" />
     </td>
     <td class="category-col">
-      <select :id="`editing-date-input-${expenseRef.id}`" v-model="expenseCategory" name="categories"
-        class="category-input" required @change="saveExpense">
+      <select :id="`editing-date-input-${expenseRef.id}`" ref="categoryRef" name="categories" class="category-input"
+        required @change="saveExpense">
         <option v-for="c in categories" :value="c.id">{{ c.name }}</option>
       </select>
     </td>
     <td class="title-col">
-      <input id="title-input" v-model="expenseRef.title" type="text" name="title" placeholder="'Summit Garden'"
-        class="title-input" required @input="saveExpense" />
+      <input id="title-input" ref="titleRef" type="text" name="title" placeholder="'Summit Garden'" class="title-input"
+        required @input="saveExpense" />
     </td>
     <td class="cost-col">
-      <input id="cost-input" v-model="expenseRef.cost" type="number" name="cost" min="0" step="0.01" placeholder="0"
+      <input id="cost-input" ref="costRef" type="number" name="cost" min="0" step="0.01" placeholder="0"
         class="cost-input" required @input="saveExpense" />
     </td>
   </tr>
