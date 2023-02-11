@@ -1,5 +1,5 @@
 <script setup>
-import { computed, toRef } from "vue"
+import { computed, toRef, watch, ref } from "vue"
 import { debounce } from "lodash"
 import { formatDateToTimestamp, formatTimestampToDate } from "../utilities/dateHelpers"
 import { useExpensesStore } from "../store/expenses"
@@ -18,28 +18,23 @@ const props = defineProps({
 const emit = defineEmits(["saveExpense"])
 
 const expenseRef = toRef(props, "expense")
-
 const generateDateString = (v) => {
-  const convertedDate = formatTimestampToDate(v)
-  const num = convertedDate.getUTCDate()
-  const month = convertedDate.getUTCMonth() + 1
+  const num = v.getUTCDate()
+  const monthNumber = v.getUTCMonth() + 1
+  const month = (monthNumber) < 10 ? `0${monthNumber}` : monthNumber
   const date = `${num < 10 ? "0" + num : num}`
-  const year = convertedDate.getUTCFullYear()
+  const year = v.getUTCFullYear()
   return `${year}-${month}-${date}`
 }
-const expenseDate = computed({
-  get: () => generateDateString(expenseRef.value.date),
-  set: (newVal) => {
-    const offset = new Date(Date.now()).getTimezoneOffset() / 60
-    const expenseDate = new Date(newVal)
-    expenseDate.setHours(expenseDate.getHours() + offset)
-    expenseRef.value.date = formatDateToTimestamp(expenseDate)
-    generateDateString(newVal)
-  },
-});
 const expenseCategory = computed({
   get: () => expensesStore.categories.find((c) => c.id === expenseRef.value.category).id,
   set: (newVal) => expenseRef.value.category = newVal
+})
+
+const expenseDateInput = ref(null);
+watch(expenseDateInput, (el) => {
+  console.log(generateDateString(expenseRef.value.date))
+  el.value = generateDateString(expenseRef.value.date)
 })
 
 const saveExpense = debounce(() => {
@@ -52,7 +47,7 @@ const saveExpense = debounce(() => {
 <template>
   <tr class="table-grid">
     <td class="date-col">
-      <input :id="`editing-date-input-${expenseRef.id}`" v-model="expenseDate" class="date-input" type="date"
+      <input :id="`editing-date-input-${expenseRef.id}`" ref="expenseDateInput" class="date-input" type="date"
         name="date-picker" required @change="saveExpense" />
     </td>
     <td class="category-col">
