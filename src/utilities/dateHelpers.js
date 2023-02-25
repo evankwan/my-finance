@@ -43,6 +43,11 @@ export const getMonthName = (index) => {
   return name
 }
 
+export const subtractMonths = (month, subtract) => {
+  const remainder = month - subtract;
+  return remainder >= 0 ? month - subtract : 12 - Math.abs(remainder)
+}
+
 export const formatDateToTimestamp = (date) => {
   return Number(date * 1000);
 }

@@ -17,14 +17,12 @@ const expensesStore = useExpensesStore()
 
 const dateRef = ref(null)
 watch(dateRef, (el) => {
-  console.log("change");
   const val = expenseRef.value.date
   const num = val.getUTCDate()
   const monthNumber = val.getUTCMonth() + 1
   const month = (monthNumber) < 10 ? `0${monthNumber}` : monthNumber
   const date = `${num < 10 ? "0" + num : num}`
-  const year = val.getUTCFullYear()
-  el.value = `${year}-${month}-${date}`
+  el.value = `${val.getUTCFullYear()}-${month}-${date}`
 })
 
 const categories = computed(() => expensesStore.categories)

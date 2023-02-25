@@ -10,7 +10,7 @@ describe("expenses.vue", () => {
       shallow: true,
       global: {
         plugins: [createTestingPinia()],
-        stubs: ["ExpensesHeader", "ExpenseForm"]
+        stubs: ["PageHeader", "ExpenseForm"]
       }
     })
   }

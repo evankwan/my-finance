@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from "vue"
-import ExpensesHeader from "../components/ExpensesHeader.vue"
+import PageHeader from "../components/PageHeader.vue"
 import ExpenseForm from "../components/ExpenseForm.vue"
 import ExpensesList from "../components/ExpensesList.vue"
 
@@ -14,7 +14,7 @@ onMounted(async () => {
 
 <template>
   <div class="expenses-wrapper">
-    <ExpensesHeader id="expenses-header" />
+    <PageHeader id="expenses-header" heading="Expenses" />
     <main>
       <ExpenseForm id="expenses-form" />
       <ExpensesList id="expenses-list" />

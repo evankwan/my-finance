@@ -1,5 +1,12 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { computed } from "vue"
+import { RouterLink } from "vue-router"
+
+const sidebarLinks = computed(() => ([
+  { path: "/", name: "Home" },
+  { path: "/expenses", name: "Transactions" },
+  { path: "/charts", name: "Charts" },
+]))
 </script>
 
 <template>
@@ -10,14 +17,9 @@ import { RouterLink } from "vue-router";
       </RouterLink>
     </h2>
     <ul class="sidebar-links">
-      <li class="sidebar-item">
-        <RouterLink to="/" class="sidebar-item-link">
-          Home
-        </RouterLink>
-      </li>
-      <li class="sidebar-item">
-        <RouterLink to="/expenses" class="sidebar-item-link">
-          Transactions
+      <li v-for="link in sidebarLinks" class="sidebar-item">
+        <RouterLink :to="link.path" class="sidebar-item-link">
+          {{ link.name }}
         </RouterLink>
       </li>
     </ul>
