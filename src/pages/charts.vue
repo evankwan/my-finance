@@ -66,8 +66,8 @@ const chartData = computed(() => {
     labels: previousMonthsNames.value,
     datasets: [
       {
-        label: 'Expenses',
-        backgroundColor: '#f87979',
+        label: 'total expenses in $',
+        backgroundColor: '#61d58e',
         data: previousMonthsExpenses.value
       }
     ]
