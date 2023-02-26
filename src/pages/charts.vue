@@ -27,10 +27,8 @@ ChartJS.register(
   Legend
 )
 
-
 const expensesStore = useExpensesStore()
 
-// testing out chart js, trying to make a chart for the last 3 months of expenses
 const currentMonth = new Date().getMonth()
 const numberOfMonths = computed(() => 3);
 const previousMonths = computed(() => {
