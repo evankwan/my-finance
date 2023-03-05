@@ -1,11 +1,11 @@
-import ExpensesHeader from "./ExpensesHeader.vue"
+import PageHeader from "./PageHeader.vue"
 
 import { mount } from "@vue/test-utils"
 import { describe, it, expect } from "vitest"
 
-describe("ExpensesHeader", () => {
+describe("PageHeader", () => {
   const getWrapper = () => {
-    return mount(ExpensesHeader, {
+    return mount(PageHeader, {
       shallow: true,
     });
   }

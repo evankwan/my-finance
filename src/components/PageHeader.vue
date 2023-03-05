@@ -1,10 +1,15 @@
 <script setup>
-
+const props = defineProps({
+  heading: {
+    type: String,
+    required: true,
+  }
+})
 </script>
 
 <template>
   <header class="header-container">
-    <h1 id="expenses-title" class="welcome-title">Expenses</h1>
+    <h1 id="expenses-title" class="welcome-title">{{ props.heading }}</h1>
   </header>
 </template>
 
