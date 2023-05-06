@@ -1,23 +1,21 @@
 import Database from "../services/Database"
 
-export default {
-  getAll: async () => {
-    const db = await Database.connect()
-    return db.select("SELECT * FROM expenses")
-  },
-  getCategories: async () => {
-    const db = await Database.connect()
-    return db.select("SELECT * FROM categories")
-  },
-  add: async ({ expense }) => {
-    const { date, title, category, cost } = expense
-    const db = await Database.connect()
-    await db.execute("INSERT INTO expenses (date, category, title, cost) VALUES ($1,$2,$3,$4)", [
-      date,
-      category,
-      title,
-      cost
-    ])
-    return expense
-  },
+export async function getAll() {
+  const db = await Database.connect()
+  return db.select("SELECT * FROM expenses")
+}
+export async function getCategories() {
+  const db = await Database.connect()
+  return db.select("SELECT * FROM categories")
+}
+export async function add(expense) {
+  const { date, title, category, cost } = expense
+  const db = await Database.connect()
+  await db.execute("INSERT INTO expenses (date, category, title, cost) VALUES ($1,$2,$3,$4)", [
+    date,
+    category,
+    title,
+    cost
+  ])
+  return expense
 }

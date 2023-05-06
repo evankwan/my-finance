@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
-import ExpensesAPI from "../api/ExpensesAPI"
+import { getAll, getCategories as getCategoriesFromDb, add } from "../api/ExpensesAPI"
 import { formatTimestampToDate } from "../utilities/dateHelpers"
 
 export const useExpensesStore = defineStore("expenses", () => {
@@ -9,7 +9,7 @@ export const useExpensesStore = defineStore("expenses", () => {
 
   const getExpenses = async () => {
     try {
-      const result = await ExpensesAPI.getAll()
+      const result = await getAll()
       const formattedExpenses = result.map((expense) => ({
         ...expense,
         date: formatTimestampToDate(expense.date)
@@ -21,19 +21,19 @@ export const useExpensesStore = defineStore("expenses", () => {
   }
   const getCategories = async () => {
     try {
-      const result = await ExpensesAPI.getCategories()
+      const result = await getCategoriesFromDb()
       categories.value = [...result]
     } catch (error) {
       console.error({ error })
     }
   }
-  const add = async ({ expense }) => {
+  const addExpense = async (expense) => {
     try {
-      await ExpensesAPI.add({ expense })
-      list.value = [
-        ...list.value,
-        expense
-      ]
+      await add(expense)
+      list.value.push({
+        ...expense,
+        date: formatTimestampToDate(expense.date)
+      })
     } catch (error) {
       console.error({ error })
     }
@@ -52,7 +52,7 @@ export const useExpensesStore = defineStore("expenses", () => {
     categories,
     getCategories,
     getExpenses,
-    add,
+    addExpense,
     saveExpense,
   }
 })
