@@ -30,9 +30,9 @@ describe("ExpensesList", () => {
   }
   it("adds a list item for each item in the expenses list", async () => {
     const wrapper = getWrapper()
-    const $expenses = wrapper.findAll(".expense")
     const expensesStore = useExpensesStore()
+    const $expenses = wrapper.findAll(".expense-item")
     expect($expenses.length).not.toBe(0)
     expect($expenses.length).toBe(expensesStore.list.length)
   })
-})
+}) 

@@ -4,6 +4,7 @@ import { mount, flushPromises } from "@vue/test-utils"
 import { describe, it, expect } from "vitest"
 import { createTestingPinia } from "@pinia/testing"
 
+import { formatDateToTimestamp } from "../utilities/dateHelpers"
 import { useExpensesStore } from "../store/expenses"
 
 describe("ExpenseForm", () => {
@@ -18,11 +19,13 @@ describe("ExpenseForm", () => {
 
   it("adds a new expense to the store when submitting the form", async () => {
     const wrapper = getWrapper()
+
+    const expensesStore = useExpensesStore()
     const expectedData = {
-      date: "2022-12-05",
-      cost: 100.34,
+      date: formatDateToTimestamp("2022-12-05"),
+      cost: String(100.34),
       title: "Leafs Jersey",
-      category: "uncategorized",
+      category: 1,
       id: 1,
     }
 
@@ -32,7 +35,7 @@ describe("ExpenseForm", () => {
 
     await wrapper.find("#expense-form").trigger("submit")
 
-    const expensesStore = useExpensesStore()
+    // const expensesStore = useExpensesStore()
     expect(expensesStore.add).toHaveBeenCalledWith(
       expect.objectContaining({
         expense: expect.objectContaining(expectedData)
@@ -47,7 +50,7 @@ describe("ExpenseForm", () => {
 
     await $dateInput.setValue("2022-12-05")
     await $titleInput.setValue("Leafs Jersey")
-    await $costInput.setValue(100.34)
+    await $costInput.setValue("100.34")
     await wrapper.find("#expense-form").trigger("submit")
     await flushPromises()
 

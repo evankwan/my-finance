@@ -16,19 +16,22 @@ const cost = ref(0)
 
 const handleAddExpense = async (e) => {
   e.preventDefault()
-  isShowingError.value = errorMessages.value.length ? true : false
+  if (errorMessages.value.length) {
+    isShowingError.value = true;
+    return;
+  }
+  isShowingError.value = false;
 
   const offset = new Date(Date.now()).getTimezoneOffset() / 60
   const expenseDate = new Date(date.value)
   expenseDate.setHours(expenseDate.getHours() + offset)
-
   const chosenCategory = categories.value.find((c) => c.id === category.value)
   const expense = {
     id: expensesStore.list.length + 1,
     date: formatDateToTimestamp(expenseDate),
     cost: cost.value.toFixed(2),
     title: title.value,
-    category: chosenCategory.id
+    category: chosenCategory?.id ?? 1
   }
   await expensesStore.add({ expense })
   await expensesStore.getExpenses();
