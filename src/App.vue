@@ -5,12 +5,12 @@ import { RouterView } from "vue-router"
 
 import { useExpensesStore } from "./store/expenses"
 
-const ExpensesStore = useExpensesStore()
+const expensesStore = useExpensesStore()
 
 onMounted(async () => {
   await Promise.all([
-    ExpensesStore.getCategories(),
-    ExpensesStore.getExpenses()
+    expensesStore.getCategories(),
+    expensesStore.getExpenses()
   ])
 })
 </script>
