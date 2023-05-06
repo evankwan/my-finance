@@ -7,6 +7,9 @@ describe("PageHeader", () => {
   const getWrapper = () => {
     return mount(PageHeader, {
       shallow: true,
+      props: {
+        heading: "Expenses"
+      }
     });
   }
   it("runs", () => {

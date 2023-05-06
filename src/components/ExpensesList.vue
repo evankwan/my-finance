@@ -22,7 +22,7 @@ const handleUpdatedExpense = async ({ expense }) => {
       <th id="title-col" class="title-col">Name</th>
       <th id="cost-col" class="cost-col">Cost</th>
     </tr>
-    <ExpenseItem v-for="expense in list" :expense="expense" @save-expense="handleUpdatedExpense" />
+    <ExpenseItem v-for="expense in list" class="expense-item" :expense="expense" @save-expense="handleUpdatedExpense" />
   </table>
 </template>
 
