@@ -20,7 +20,6 @@ describe("ExpenseForm", () => {
   it("adds a new expense to the store when submitting the form", async () => {
     const wrapper = getWrapper()
 
-    const expensesStore = useExpensesStore()
     const expectedData = {
       date: formatDateToTimestamp("2022-12-05"),
       cost: String(100.34),
@@ -35,11 +34,9 @@ describe("ExpenseForm", () => {
 
     await wrapper.find("#expense-form").trigger("submit")
 
-    // const expensesStore = useExpensesStore()
-    expect(expensesStore.add).toHaveBeenCalledWith(
-      expect.objectContaining({
-        expense: expect.objectContaining(expectedData)
-      })
+    const expensesStore = useExpensesStore()
+    expect(expensesStore.addExpense).toHaveBeenCalledWith(
+      expect.objectContaining(expectedData)
     );
   })
   it("clears the form after the form is submitted", async () => {
