@@ -1,23 +1,20 @@
 import { setActivePinia, createPinia } from "pinia"
-import { describe, expect, it, beforeEach, vi } from "vitest"
 import { flushPromises } from "@vue/test-utils"
 import { useExpensesStore } from "./expenses"
-import ExpensesAPI from "../api/ExpensesAPI"
-import { formatDateToTimestamp } from "../utilities/dateHelpers"
+import { add, getAll } from "@/api/ExpensesAPI"
+import { formatDateToTimestamp } from "@/utilities/dateHelpers"
 
-vi.mock("../api/ExpensesAPI", () => ({
-  default: {
-    add: vi.fn(),
-    getAll: vi.fn(() => {
-      const date = new Date(2024, 3, 23)
-      const timestamp = formatDateToTimestamp(date)
-      return [
-        { id: 1, date: timestamp },
-        { id: 2, date: timestamp },
-        { id: 3, date: timestamp },
-      ]
-    })
-  }
+vi.mock("@/api/ExpensesAPI", () => ({
+  add: vi.fn(),
+  getAll: vi.fn(() => {
+    const date = new Date(2024, 3, 23)
+    const timestamp = formatDateToTimestamp(date)
+    return [
+      { id: 1, date: timestamp },
+      { id: 2, date: timestamp },
+      { id: 3, date: timestamp },
+    ]
+  })
 }))
 
 describe("expenses store", () => {
@@ -31,7 +28,7 @@ describe("expenses store", () => {
         const expectedDate = new Date(2024, 3, 23)
         const expenses = useExpensesStore()
         await expenses.getExpenses()
-        expect(ExpensesAPI.getAll).toHaveBeenCalled()
+        expect(getAll).toHaveBeenCalled()
         expect(expenses.list).toEqual(
           expect.arrayContaining([
             { id: 1, date: expectedDate },
@@ -43,7 +40,7 @@ describe("expenses store", () => {
       it("console errors in the event of an error", async () => {
         const mockError = "error"
         vi.spyOn(console, "error").mockImplementation(vi.fn())
-        ExpensesAPI.getAll.mockRejectedValue(mockError)
+        getAll.mockRejectedValue(mockError)
         const expenses = useExpensesStore()
         await expenses.getExpenses()
         expect(console.error).toHaveBeenCalledWith(
@@ -62,8 +59,8 @@ describe("expenses store", () => {
       it("adds an expense to the list", async () => {
         const expenses = useExpensesStore()
         expect(expenses.list).toHaveLength(0)
-        await expenses.add({ expense })
-        expect(ExpensesAPI.add).toHaveBeenCalledWith(
+        await expenses.addExpense({ expense })
+        expect(add).toHaveBeenCalledWith(
           expect.objectContaining({ expense })
         )
 
@@ -73,9 +70,9 @@ describe("expenses store", () => {
       it("catches errors with a console.error", async () => {
         const mockError = "error"
         vi.spyOn(console, "error").mockImplementation()
-        ExpensesAPI.add.mockRejectedValue(mockError)
+        add.mockRejectedValue(mockError)
         const expenses = useExpensesStore()
-        await expenses.add({ expense })
+        await expenses.addExpense({ expense })
 
         await flushPromises()
         expect(console.error).toHaveBeenCalledWith(

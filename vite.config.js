@@ -1,13 +1,14 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import AutoImport from 'unplugin-auto-import/vite'
+import AutoImport from "unplugin-auto-import/vite"
+import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      imports: ['vitest'],
+      imports: ["vitest"],
       dts: false,
     }),
   ],
@@ -25,9 +26,25 @@ export default defineConfig({
   build: {
     // Tauri supports es2021
     target: ["es2021", "chrome100", "safari13"],
-    // don't minify for debug builds
+    // don"t minify for debug builds
     minify: !process.env.TAURI_DEBUG ? "esbuild" : false,
     // produce sourcemaps for debug builds
     sourcemap: !!process.env.TAURI_DEBUG,
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@tauri": path.resolve(__dirname, "./src-tauri"),
+      "@public": path.resolve(__dirname, "./public"),
+    },
+  },
+  test: {
+    clearMocks: true,
+    coverage: {
+      provider: "c8"
+    },
+    environment: "jsdom",
+    globals: true,
+    include: ["src/**/*.{test,spec}.{js,ts}"],
   },
 });

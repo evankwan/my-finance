@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted } from "vue"
-import PageHeader from "../components/PageHeader.vue"
-import ExpenseForm from "../components/ExpenseForm.vue"
-import ExpensesList from "../components/ExpensesList.vue"
+import PageHeader from "@/components/PageHeader.vue"
+import ExpenseForm from "@/components/ExpenseForm.vue"
+import ExpensesList from "@/components/ExpensesList.vue"
 
-import { useExpensesStore } from "../store/expenses"
+import { useExpensesStore } from "@/store/expenses"
 
 onMounted(async () => {
   const expensesStore = useExpensesStore()

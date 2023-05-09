@@ -2,7 +2,6 @@ import expenses from "./expenses.vue"
 
 import { mount } from "@vue/test-utils"
 import { createTestingPinia } from "@pinia/testing"
-import { describe, it, expect } from "vitest"
 
 describe("expenses.vue", () => {
   const getWrapper = () => {

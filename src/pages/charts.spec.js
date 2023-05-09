@@ -2,8 +2,8 @@ import charts from "./charts.vue"
 
 import { mount, enableAutoUnmount } from "@vue/test-utils"
 import { createTestingPinia } from "@pinia/testing"
-import { describe, it, expect } from "vitest"
-import { useExpensesStore } from "../store/expenses"
+
+import { useExpensesStore } from "@/store/expenses"
 
 enableAutoUnmount(afterEach)
 
