@@ -19,3 +19,10 @@ export async function add(expense) {
   ])
   return expense
 }
+export async function addCategory(category) {
+  const db = await Database.connect()
+  await db.execute("INSERT INTO categories (name) VALUES ($1)", [
+    category
+  ])
+  return category
+}

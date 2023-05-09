@@ -63,7 +63,7 @@ const errorMessages = computed(() => {
 </script>
 
 <template>
-  <form id="expense-form" @submit="handleAddExpense">
+  <form id="expense-form" @submit.prevent="handleAddExpense">
     <div class="expense-form">
       <input id="date-input" v-model="date" class="date-input" type="date" name="date-picker" required />
       <select id="categories" v-model="category" name="categories" class="category-input" required>
