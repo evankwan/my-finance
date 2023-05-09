@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue"
-import { useExpensesStore } from "../store/expenses"
+import { useExpensesStore } from "@/store/expenses"
 
 import ExpenseItem from "./ExpenseItem.vue"
 

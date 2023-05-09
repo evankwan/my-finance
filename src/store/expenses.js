@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
-import { getAll, getCategories as getCategoriesFromDb, add } from "../api/ExpensesAPI"
-import { formatTimestampToDate } from "../utilities/dateHelpers"
+import { getAll, getCategories as getCategoriesFromDb, add } from "@/api/ExpensesAPI"
+import { formatTimestampToDate } from "@/utilities/dateHelpers"
 
 export const useExpensesStore = defineStore("expenses", () => {
   const list = ref([])

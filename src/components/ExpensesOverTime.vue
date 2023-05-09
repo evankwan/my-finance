@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch } from "vue"
 import { Line as LineGraph } from "vue-chartjs"
-import { subtractMonths, getMonthName } from "../utilities/dateHelpers.js"
+import { subtractMonths, getMonthName } from "@/utilities/dateHelpers.js"
 import {
   Chart as ChartJS,
   CategoryScale,

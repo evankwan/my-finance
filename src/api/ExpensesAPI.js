@@ -1,4 +1,4 @@
-import Database from "../services/Database"
+import Database from "@/services/Database"
 
 export async function getAll() {
   const db = await Database.connect()

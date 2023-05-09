@@ -1,11 +1,10 @@
 import { setActivePinia, createPinia } from "pinia"
-import { describe, expect, it, beforeEach, vi } from "vitest"
 import { flushPromises } from "@vue/test-utils"
 import { useExpensesStore } from "./expenses"
-import { add, getAll } from "../api/ExpensesAPI"
-import { formatDateToTimestamp } from "../utilities/dateHelpers"
+import { add, getAll } from "@/api/ExpensesAPI"
+import { formatDateToTimestamp } from "@/utilities/dateHelpers"
 
-vi.mock("../api/ExpensesAPI", () => ({
+vi.mock("@/api/ExpensesAPI", () => ({
   add: vi.fn(),
   getAll: vi.fn(() => {
     const date = new Date(2024, 3, 23)

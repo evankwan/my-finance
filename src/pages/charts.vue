@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, computed } from "vue"
 
-import { useExpensesStore } from "../store/expenses"
-import PageHeader from "../components/PageHeader.vue"
-import ExpensesOverTime from "../components/ExpensesOverTime.vue"
+import { useExpensesStore } from "@/store/expenses"
+import PageHeader from "@/components/PageHeader.vue"
+import ExpensesOverTime from "@/components/ExpensesOverTime.vue"
 
 const expensesStore = useExpensesStore()
 const expenses = computed(() => expensesStore.list)

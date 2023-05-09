@@ -1,7 +1,6 @@
 import welcome from "./welcome.vue"
 
 import { mount } from "@vue/test-utils"
-import { describe, it, expect } from "vitest"
 
 describe("welcome.vue", () => {
   it("displays a welcome prompt", () => {

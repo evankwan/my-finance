@@ -1,10 +1,9 @@
-import { describe, it, expect } from "vitest"
-import { mount, flushPromises } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import { createTestingPinia } from "@pinia/testing"
-import ExpensesList from "./ExpensesList.vue"
-import { formatDateToTimestamp } from "../utilities/dateHelpers"
 
-import { useExpensesStore } from "../store/expenses"
+import ExpensesList from "./ExpensesList.vue"
+import { formatDateToTimestamp } from "@/utilities/dateHelpers"
+import { useExpensesStore } from "@/store/expenses"
 
 describe("ExpensesList", () => {
   const getWrapper = () => {

@@ -1,11 +1,10 @@
 import ExpenseForm from "./ExpenseForm.vue"
 
 import { mount, flushPromises } from "@vue/test-utils"
-import { describe, it, expect } from "vitest"
 import { createTestingPinia } from "@pinia/testing"
 
-import { formatDateToTimestamp } from "../utilities/dateHelpers"
-import { useExpensesStore } from "../store/expenses"
+import { formatDateToTimestamp } from "@/utilities/dateHelpers"
+import { useExpensesStore } from "@/store/expenses"
 
 describe("ExpenseForm", () => {
   const getWrapper = () => {

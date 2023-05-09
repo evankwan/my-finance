@@ -1,7 +1,7 @@
 <script setup>
 import { computed, toRef, watch, ref } from "vue"
 import { debounce } from "lodash"
-import { useExpensesStore } from "../store/expenses"
+import { useExpensesStore } from "@/store/expenses"
 
 const emit = defineEmits(["saveExpense"])
 

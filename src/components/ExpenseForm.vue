@@ -1,9 +1,8 @@
 <script setup>
 import { ref, computed } from "vue"
 
-import { useExpensesStore } from "../store/expenses";
-
-import { formatDateToTimestamp } from "../utilities/dateHelpers"
+import { useExpensesStore } from "@/store/expenses";
+import { formatDateToTimestamp } from "@/utilities/dateHelpers"
 
 const expensesStore = useExpensesStore()
 
