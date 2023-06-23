@@ -1,5 +1,5 @@
 <script setup>
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader from "@/components/PageHeader.vue"
 import CategoriesList from "@/components/CategoriesList.vue"
 import CategoryForm from "@/components/CategoryForm.vue"
 </script>

@@ -6,6 +6,7 @@ const sidebarLinks = computed(() => ([
   { path: "/", name: "Home" },
   { path: "/expenses", name: "Transactions" },
   { path: "/charts", name: "Charts" },
+  { path: "/budget", name: "Budget" },
   { path: "/categories", name: "Categories" },
 ]))
 </script>

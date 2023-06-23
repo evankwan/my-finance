@@ -5,8 +5,6 @@ import { formatTimestampToDate } from "@/utilities/dateHelpers"
 
 export const useExpensesStore = defineStore("expenses", () => {
   const list = ref([])
-  const categories = ref([])
-
   const getExpenses = async () => {
     try {
       const result = await getAll()
@@ -38,6 +36,8 @@ export const useExpensesStore = defineStore("expenses", () => {
       console.error(error)
     }
   }
+
+  const categories = ref([])
   const getCategories = async () => {
     try {
       const result = await getCategoriesFromDb()
