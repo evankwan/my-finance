@@ -30,6 +30,10 @@ const resetNewCateogryForm = () => {
   newCategoryName.value = ""
   newCategoryAmount.value = 0;
 }
+
+const totalBudget = computed(() => {
+  return categories.value.reduce((acc, cur) => acc + cur.amount, 0)
+})
 </script>
 
 <template>
@@ -42,13 +46,6 @@ const resetNewCateogryForm = () => {
           <th id="amount-heading" class="amount-col">Amount</th>
           <th id="action-heading" class="action-col">Action</th>
         </tr>
-        <tr v-for="category in categories" class="category-list-row">
-          <td class="name-col">{{ category.name }}</td>
-          <td class="amount-col">$ {{ category.amount }}</td>
-          <td class="action-col"></td>
-          <td></td>
-        </tr>
-        <hr />
         <tr class="category-list-row">
           <td class="name-col">
             <input v-model="newCategoryName" class="category-name-input" type="text" required />
@@ -59,6 +56,21 @@ const resetNewCateogryForm = () => {
           </td>
           <td class="action-col">
             <button class="add-category-button" @click="handleAddNewCategory">Add +</button>
+          </td>
+        </tr>
+        <tr v-for="category in categories" class="category-list-row">
+          <td class="name-col">{{ category.name }}</td>
+          <td class="amount-col">$ {{ category.amount }}</td>
+          <td class="action-col"></td>
+          <td></td>
+        </tr>
+        <hr />
+        <tr class="category-list-row">
+          <td class="name-col">
+            Total
+          </td>
+          <td class="amount-col">
+            $ {{ totalBudget }}
           </td>
         </tr>
       </table>
@@ -89,6 +101,7 @@ const resetNewCateogryForm = () => {
   justify-content: start;
   align-items: stretch;
   width: 100%;
+  gap: 1rem;
 }
 
 .category-list-row {
@@ -121,7 +134,6 @@ const resetNewCateogryForm = () => {
 
 hr {
   border: 1px solid #f9f9f9;
-  margin: 2rem 0 1rem;
   width: 100%;
 }
 
