@@ -32,6 +32,7 @@ export const useExpensesStore = defineStore("expenses", () => {
     try {
       const index = list.value.findIndex((e) => e.id === expense.id)
       list.value.splice(index, 1, expense)
+      // @TODO save this to the db
     } catch (error) {
       console.error(error)
     }

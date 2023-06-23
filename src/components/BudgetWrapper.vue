@@ -1,28 +1,29 @@
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, computed, onMounted } from "vue"
 
 import { useBudgetsStore } from "@/store/budgets"
 import { DEFAULT_BUDGET_ID } from "@/utilities/constants.js"
 
 const budgetsStore = useBudgetsStore()
 
-const categories = ref([])
+const categories = computed(() => budgetsStore.categories)
 const currentBudget = ref({})
 onMounted(async () => {
-  const [_, defaultCategories] = await Promise.all([
+  await Promise.all([
     budgetsStore.getBudgets(),
     budgetsStore.getCategories(DEFAULT_BUDGET_ID)
   ])
-  categories.value = defaultCategories
   currentBudget.value = budgetsStore.budgets.find(({ id }) => id === DEFAULT_BUDGET_ID)
-  console.log({ categories: categories.value })
-  console.log({ currentBudget: currentBudget.value })
 })
 
 const newCategoryName = ref("")
 const newCategoryAmount = ref(0)
 const handleAddNewCategory = async () => {
   console.log("add that shit");
+  await budgetsStore.saveCategory(currentBudget.value.id, {
+    name: newCategoryName.value,
+    amount: newCategoryAmount.value,
+  })
   resetNewCateogryForm()
 }
 const resetNewCateogryForm = () => {
@@ -43,7 +44,7 @@ const resetNewCateogryForm = () => {
         </tr>
         <tr v-for="category in categories" class="category-list-row">
           <td class="name-col">{{ category.name }}</td>
-          <td class="amount-col">{{ category.amount }}</td>
+          <td class="amount-col">$ {{ category.amount }}</td>
           <td class="action-col"></td>
           <td></td>
         </tr>

@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
-import { getList, getBudgetCategories } from "@/api/BudgetsApi"
+import { getList, getBudgetCategories, addCategory } from "@/api/BudgetsApi"
 
 export const useBudgetsStore = defineStore("budgets", () => {
   const budgets = ref([])
@@ -11,25 +11,42 @@ export const useBudgetsStore = defineStore("budgets", () => {
       budgets.value = result
     } catch (error) {
       console.error({ error })
-    }
-    finally {
-      return budgets
+    } finally {
+      return budgets.value
     }
   }
 
+  const categories = ref([])
   const getCategories = async (id) => {
     try {
       const result = await getBudgetCategories(id)
-      console.log(result)
-      return result
+      categories.value = result;
     } catch (error) {
       console.error({ error })
+    } finally {
+      return categories.value
+    }
+  }
+  const saveCategory = async (id, category) => {
+    try {
+      const categoryToAdd = {
+        ...category,
+        budget_id: id,
+      }
+      await addCategory(categoryToAdd)
+      await getCategories(id)
+    } catch (error) {
+      console.error({ error })
+    } finally {
+      return categories.value
     }
   }
 
   return {
     budgets,
     getBudgets,
+    categories,
     getCategories,
+    saveCategory,
   }
 })
