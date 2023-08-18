@@ -8,17 +8,17 @@ import { useExpensesStore } from "@/store/expenses"
 enableAutoUnmount(afterEach)
 
 describe("charts.vue", () => {
-  const getWrapper = () => mount(charts, {
-    shallow: true,
-    global: {
-      plugins: [createTestingPinia()],
-      stubs: ["PageHeader", "ExpensesOverTime"],
-    }
-  })
-  it("calls the getCategories action when mounting the component", async () => {
-    getWrapper();
-    const expensesStore = useExpensesStore()
+	const getWrapper = () => mount(charts, {
+		shallow: true,
+		global: {
+			plugins: [createTestingPinia()],
+			stubs: ["PageHeader", "ExpensesOverTime"],
+		}
+	})
+	it("calls the getCategories action when mounting the component", async () => {
+		getWrapper();
+		const expensesStore = useExpensesStore()
 
-    expect(expensesStore.getCategories).toHaveBeenCalled()
-  })
+		expect(expensesStore.getCategories).toHaveBeenCalled()
+	})
 })
