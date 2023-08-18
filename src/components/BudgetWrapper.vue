@@ -44,7 +44,7 @@ const totalBudget = computed(() => {
         <tr class="category-list-row">
           <th id="name-heading" class="name-col">Category name</th>
           <th id="amount-heading" class="amount-col">Amount</th>
-          <th id="action-heading" class="action-col">Action</th>
+          <th id="action-heading" class="action-col action-col-header">Action</th>
         </tr>
         <tr class="category-list-row">
           <td class="name-col">
@@ -126,6 +126,11 @@ const totalBudget = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: left;
+}
+
+.action-col-header {
+  justify-content: flex-start;
 }
 
 .action-col>button {
