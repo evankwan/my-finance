@@ -1,4 +1,3 @@
-import vitestGlobals from "eslint-plugin-vitest-globals";
 import globals from "globals";
 
 export default [
@@ -14,9 +13,6 @@ export default [
 				"afterEach": "readonly",
 				"beforeEach": "readonly",
 			}
-		},
-		"plugins": {
-			"plugin:vitest-globals/recommended": vitestGlobals,
 		},
 		"rules": {
 			"array-bracket-spacing": 2,
