@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "dev": "tauri dev",
-    "lint": "npx eslint --ext .vue,.js,.spec.js",
+    "lint": "eslint -- src/**/*{.js,.vue}",
+    "lint:fix": "eslint --fix -- src/**/*{.js,.vue}",
     "test": "vitest run --coverage",
     "test:watch": "vitest watch"
   },
