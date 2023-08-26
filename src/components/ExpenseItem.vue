@@ -1,8 +1,10 @@
 <script setup>
 import { computed, toRef, watch, ref } from "vue"
 import { debounce } from "lodash"
+
 import { useExpensesStore } from "@/store/expenses"
 import { formatDateToTimestamp } from "@/utilities/dateHelpers.js"
+import { DEFAULT_DEBOUNCE_TIME } from "@/utilities/constants.js"
 
 const emit = defineEmits(["saveExpense"])
 
@@ -52,7 +54,7 @@ const saveExpense = debounce(() => {
 			title: titleRef.value.value,
 		}
 	})
-}, 300)
+}, DEFAULT_DEBOUNCE_TIME)
 </script>
 
 <template>

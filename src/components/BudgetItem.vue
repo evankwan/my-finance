@@ -1,8 +1,9 @@
 <script setup>
-import { ref, toRef, watch, computed } from "vue"
+import { ref, toRef, computed } from "vue"
 import { debounce } from "lodash"
 
 import { useExpensesStore } from "@/store/expenses"
+import { DEFAULT_DEBOUNCE_TIME } from "@/utilities/constants.js"
 
 const expensesStore = useExpensesStore()
 
@@ -29,7 +30,7 @@ const saveCategory = debounce(() => {
 			id: budgetCategoryRef.value.id,
 		},
 	})
-}, 300)
+}, DEFAULT_DEBOUNCE_TIME)
 </script> 
 
 <template>
