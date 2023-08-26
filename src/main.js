@@ -1,8 +1,6 @@
 import { createApp } from "vue"
 import { createPinia } from "pinia"
 
-console.log(import.meta.env);
-
 import App from "@/App.vue"
 import router from "@/router/router"
 

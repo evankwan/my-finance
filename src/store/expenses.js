@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
-import { getAll, getCategories as getCategoriesFromDb, add, addCategory as addCategoryToDb } from "@/api/ExpensesAPI"
+import { getAll, getCategories as getCategoriesFromDb, add, addCategory as addCategoryToDb, updateExpense } from "@/api/ExpensesAPI"
 import { formatTimestampToDate } from "@/utilities/dateHelpers"
 
 export const useExpensesStore = defineStore("expenses", () => {
@@ -30,9 +30,8 @@ export const useExpensesStore = defineStore("expenses", () => {
 	}
 	const saveExpense = async ({ expense }) => {
 		try {
-			const index = list.value.findIndex((e) => e.id === expense.id)
-			list.value.splice(index, 1, expense)
-			// @TODO save this to the db
+			await updateExpense(expense)
+			await getExpenses()
 		} catch (error) {
 			console.error(error)
 		}
@@ -49,7 +48,6 @@ export const useExpensesStore = defineStore("expenses", () => {
 	}
 	const addCategory = async (category) => {
 		try {
-			console.log(category);
 			await addCategoryToDb(category)
 			await getCategories()
 		} catch (error) {

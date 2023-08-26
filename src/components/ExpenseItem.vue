@@ -2,6 +2,7 @@
 import { computed, toRef, watch, ref } from "vue"
 import { debounce } from "lodash"
 import { useExpensesStore } from "@/store/expenses"
+import { formatDateToTimestamp } from "@/utilities/dateHelpers.js"
 
 const emit = defineEmits(["saveExpense"])
 
@@ -43,7 +44,13 @@ watch(costRef, (el) => {
 
 const saveExpense = debounce(() => {
 	emit("saveExpense", {
-		expense: expenseRef.value
+		expense: {
+			category: categories.value.find((c) => c.id === Number(categoryRef.value.value)).id,
+			cost: costRef.value.value,
+			date: formatDateToTimestamp(new Date(dateRef.value.value)),
+			id: expenseRef.value.id,
+			title: titleRef.value.value,
+		}
 	})
 }, 300)
 </script>
