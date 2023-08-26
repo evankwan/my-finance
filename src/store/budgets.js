@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
-import { getList, getBudgetCategories, addCategory } from "@/api/BudgetsApi"
+import { getList, getBudgetCategories, addCategory, updateCategory as updateCategoryInDb } from "@/api/BudgetsApi"
 
 export const useBudgetsStore = defineStore("budgets", () => {
 	const budgets = ref([])
@@ -41,6 +41,15 @@ export const useBudgetsStore = defineStore("budgets", () => {
 			return categories.value
 		}
 	}
+	const updateCategory = async(category) => {
+		try {
+			await updateCategoryInDb(category)
+		} catch (error) {
+			console.error({ error })
+		} finally {
+			return categories.value
+		}
+	}
 
 	return {
 		budgets,
@@ -48,5 +57,6 @@ export const useBudgetsStore = defineStore("budgets", () => {
 		categories,
 		getCategories,
 		saveCategory,
+		updateCategory,
 	}
 })

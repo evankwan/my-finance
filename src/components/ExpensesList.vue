@@ -8,7 +8,7 @@ const expensesStore = useExpensesStore()
 
 const list = computed(() => expensesStore.list)
 
-const handleUpdatedExpense = async ({ expense }) => {
+const handleUpdateExpense = async ({ expense }) => {
 	await expensesStore.saveExpense({ expense })
 }
 </script>
@@ -49,7 +49,7 @@ const handleUpdatedExpense = async ({ expense }) => {
 			:key="`expense-${expense.id}`"
 			class="expense-item"
 			:expense="expense"
-			@save-expense="handleUpdatedExpense"
+			@save-expense="handleUpdateExpense"
 		/>
 	</table>
 </template>

@@ -1,10 +1,16 @@
 <script setup>
 import { ref, computed, onMounted } from "vue"
 
+import BudgetItem from "@/components/BudgetItem.vue"
+
 import { useBudgetsStore } from "@/store/budgets"
+import { useExpensesStore } from "@/store/expenses"
 import { DEFAULT_BUDGET_ID } from "@/utilities/constants.js"
 
 const budgetsStore = useBudgetsStore()
+const expensesStore = useExpensesStore()
+
+const expenseCategories = computed(() => expensesStore.categories)
 
 const categories = computed(() => budgetsStore.categories)
 const currentBudget = ref({})
@@ -16,23 +22,28 @@ onMounted(async () => {
 	currentBudget.value = budgetsStore.budgets.find(({ id }) => id === DEFAULT_BUDGET_ID)
 })
 
-const newCategoryName = ref("")
+const expenseCategory = ref(1)
 const newCategoryAmount = ref(0)
 const handleAddNewCategory = async () => {
 	await budgetsStore.saveCategory(currentBudget.value.id, {
-		name: newCategoryName.value,
+		expenseCategory: expenseCategory.value,
 		amount: newCategoryAmount.value,
 	})
-	resetNewCateogryForm()
+	resetNewCategoryForm()
 }
-const resetNewCateogryForm = () => {
-	newCategoryName.value = ""
-	newCategoryAmount.value = 0;
+const resetNewCategoryForm = () => {
+	expenseCategory.value = 1
+	newCategoryAmount.value = 0
 }
 
 const totalBudget = computed(() => {
 	return categories.value.reduce((acc, cur) => acc + cur.amount, 0)
 })
+
+const handleUpdateCategory = async ({ category }) => {
+	await budgetsStore.updateCategory(category)
+	await budgetsStore.getCategories(DEFAULT_BUDGET_ID)
+} 
 </script>
 
 <template>
@@ -64,12 +75,21 @@ const totalBudget = computed(() => {
 				</tr>
 				<tr class="category-list-row">
 					<td class="name-col">
-						<input
-							v-model="newCategoryName"
+						<select
+							id="new-category-categories"
+							v-model="expenseCategory"
+							name="categories"
 							class="category-name-input"
-							type="text"
 							required
 						>
+							<option
+								v-for="c in expenseCategories"
+								:key="`new-category-category-${c.id}`"
+								:value="c.id"
+							>
+								{{ c.name }}
+							</option>
+						</select>
 					</td>
 					<td class="amount-col">
 						<input
@@ -92,20 +112,12 @@ const totalBudget = computed(() => {
 						</button>
 					</td>
 				</tr>
-				<tr
+				<BudgetItem
 					v-for="category in categories"
 					:key="`category=${category.id}`"
-					class="category-list-row"
-				>
-					<td class="name-col">
-						{{ category.name }}
-					</td>
-					<td class="amount-col">
-						$ {{ category.amount }}
-					</td>
-					<td class="action-col" />
-					<td />
-				</tr>
+					:category="category"
+					@save-category="handleUpdateCategory"
+				/>
 				<hr>
 				<tr class="category-list-row">
 					<td class="name-col">
@@ -189,5 +201,12 @@ hr {
 .add-category-button {
 	box-sizing: border-box;
 	width: 100%;
+}
+.category-amount-input {
+	text-align: right;
+}
+.category-amount-input::-webkit-outer-spin-button,
+.category-amount-input::-webkit-inner-spin-button {
+	display: none;
 }
 </style>

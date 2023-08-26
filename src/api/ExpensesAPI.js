@@ -28,7 +28,7 @@ export async function addCategory(category) {
 }
 export async function updateExpense(expense) {
 	const { category, cost, date, id, title } = expense
-	console.log(expense)
+
 	const db = await Database.connect()
 	await db.execute(
 		"UPDATE expenses SET category = ?, cost = ?, date = ?, title = ? WHERE id = ?",
@@ -40,6 +40,5 @@ export async function updateExpense(expense) {
 			id,
 		]
 	)
-	console.log("post execute")
 	return expense
 }

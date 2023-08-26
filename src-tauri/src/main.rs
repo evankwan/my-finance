@@ -29,6 +29,18 @@ fn main() {
                     sql: include_str!("../migrations/3.sql"),
                     kind: MigrationKind::Up,
                 },
+                Migration {
+                    version: 4,
+                    description: "update budgets schema",
+                    sql: include_str!("../migrations/4.sql"),
+                    kind: MigrationKind::Up,
+                },
+                Migration {
+                    version: 5,
+                    description: "update budgets schema",
+                    sql: include_str!("../migrations/5.sql"),
+                    kind: MigrationKind::Up,
+                },
             ],
         ))
         .invoke_handler(tauri::generate_handler![greet])

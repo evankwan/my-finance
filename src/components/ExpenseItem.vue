@@ -70,7 +70,7 @@ const saveExpense = debounce(() => {
 		</td>
 		<td class="category-col">
 			<select
-				:id="`editing-date-input-${expenseRef.id}`"
+				:id="`editing-category-input-${expenseRef.id}`"
 				ref="categoryRef"
 				name="categories"
 				class="category-input"
@@ -156,7 +156,7 @@ const saveExpense = debounce(() => {
 .category-input,
 .title-input,
 .cost-input {
-	padding: 0.25rem;
+	padding: 0;
 	background: none;
 	color: #f9f9f9;
 	margin: 0;
