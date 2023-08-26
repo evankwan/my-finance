@@ -18,8 +18,8 @@ export default defineConfig({
   clearScreen: false,
   // tauri expects a fixed port, fail if that port is not available
   server: {
-    port: 1420,
-    strictPort: true,
+    port: 4000,
+    strictPort: false,
   },
   // to make use of `TAURI_DEBUG` and other env variables
   // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand
@@ -42,7 +42,9 @@ export default defineConfig({
   test: {
     clearMocks: true,
     coverage: {
-      provider: "c8"
+      all: true,
+      include: ["src/**/*.{js,vue}"],
+      provider: "v8",
     },
     environment: "jsdom",
     globals: true,
