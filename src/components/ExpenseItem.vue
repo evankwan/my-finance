@@ -149,10 +149,11 @@ const saveExpense = debounce(() => {
 .category-input,
 .title-input,
 .cost-input {
-	padding: 0;
+	padding: 0.25rem;
 	background: none;
 	color: #f9f9f9;
 	margin: 0;
+	border-radius: 0;
 }
 
 .cost-input {
