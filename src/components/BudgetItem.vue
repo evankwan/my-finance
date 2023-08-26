@@ -42,7 +42,7 @@ const saveCategory = debounce(() => {
 	<tr class="category-list-row">
 		<td class="name-col">
 			<select
-				id="new-category-categories"
+				id="edit-category-categories"
 				ref="categoryRef"
 				name="categories"
 				class="category-input"
@@ -60,6 +60,7 @@ const saveCategory = debounce(() => {
 		</td>
 		<td class="amount-col">
 			<input
+				id="edit-category-amount"
 				ref="amountRef"
 				type="number"
 				name="cost"
