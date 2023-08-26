@@ -24,6 +24,7 @@ const sidebarLinks = computed(() => ([
 		<ul class="sidebar-links">
 			<li
 				v-for="link in sidebarLinks"
+				:key="link.path"
 				class="sidebar-item"
 			>
 				<RouterLink

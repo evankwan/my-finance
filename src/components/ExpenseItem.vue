@@ -72,6 +72,7 @@ const saveExpense = debounce(() => {
 			>
 				<option
 					v-for="c in categories"
+					:key="`category=${c.id}`"
 					:value="c.id"
 				>
 					{{ c.name }}

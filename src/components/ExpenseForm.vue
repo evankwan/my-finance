@@ -55,9 +55,6 @@ const errorMessages = computed(() => {
 	if (typeof category.value !== "number") {
 		messages.push("You must enter a valid category")
 	}
-	if (!messages.length) {
-		isShowingError.value = false;
-	}
 	return messages
 })
 </script>
@@ -85,6 +82,7 @@ const errorMessages = computed(() => {
 			>
 				<option
 					v-for="c in categories"
+					:key="`category-${c.id}`"
 					:value="c.id"
 				>
 					{{ c.name }}
@@ -115,12 +113,13 @@ const errorMessages = computed(() => {
 			</button>
 		</div>
 		<div
+			v-if="isShowingError"
 			id="error-messages-container"
 			class="error-messages-container"
 		>
 			<p
-				v-if="isShowingError"
 				v-for="message in errorMessages"
+				:key="`error-message-${message}`"
 				class="error-message"
 			>
 				{{ message }}

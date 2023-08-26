@@ -94,6 +94,7 @@ const totalBudget = computed(() => {
 				</tr>
 				<tr
 					v-for="category in categories"
+					:key="`category=${category.id}`"
 					class="category-list-row"
 				>
 					<td class="name-col">

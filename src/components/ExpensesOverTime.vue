@@ -95,6 +95,7 @@ const chartData = computed(() => {
 		>
 			<option
 				v-for="number in possibleTimeSpan"
+				:key="`month-option-${number}`"
 				:value="number"
 				:selected="number === 3"
 			>

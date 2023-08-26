@@ -4,7 +4,6 @@ import { useExpensesStore } from "@/store/expenses"
 
 import ExpenseItem from "./ExpenseItem.vue"
 
-
 const expensesStore = useExpensesStore()
 
 const list = computed(() => expensesStore.list)
@@ -47,6 +46,7 @@ const handleUpdatedExpense = async ({ expense }) => {
 		</tr>
 		<ExpenseItem
 			v-for="expense in list"
+			:key="`expense-${expense.id}`"
 			class="expense-item"
 			:expense="expense"
 			@save-expense="handleUpdatedExpense"
