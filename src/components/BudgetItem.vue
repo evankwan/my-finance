@@ -17,21 +17,15 @@ const budgetCategoryRef = toRef(props, "category")
 
 const expenseCategories = computed(() => expensesStore.categories)
 
-const categoryRef = ref(null)
-watch(categoryRef, (el) => {
-	el.value = expenseCategories.value.find((c) => c.id === Number(budgetCategoryRef.value.expense_category)).id
-})
-const amountRef = ref(null)
-watch(amountRef, (el) => {
-	el.value = budgetCategoryRef.value.amount
-})
+const category = ref(budgetCategoryRef.value.expense_category)
+const amount = ref(budgetCategoryRef.value.amount)
 
 const saveCategory = debounce(() => {
 	emit("saveCategory", {
 		category: {
-			amount: amountRef.value.value,
+			amount: amount.value,
 			budget_id: budgetCategoryRef.value.budget_id,
-			expenseCategory: expenseCategories.value.find((c) => c.id === Number(categoryRef.value.value)).id,
+			expenseCategory: expenseCategories.value.find((c) => c.id === Number(category.value)).id,
 			id: budgetCategoryRef.value.id,
 		},
 	})
@@ -43,7 +37,7 @@ const saveCategory = debounce(() => {
 		<td class="name-col">
 			<select
 				id="edit-category-categories"
-				ref="categoryRef"
+				v-model="category"
 				name="categories"
 				class="category-input"
 				required
@@ -61,7 +55,7 @@ const saveCategory = debounce(() => {
 		<td class="amount-col">
 			<input
 				id="edit-category-amount"
-				ref="amountRef"
+				v-model="amount"
 				type="number"
 				name="cost"
 				min="0"
