@@ -38,7 +38,7 @@ export default [
 			"block-spacing": 2,
 			"indent": [
 				"error",
-				4
+				"tab"
 			],
 			"no-duplicate-imports": "error",
 			"no-multi-spaces": 2,

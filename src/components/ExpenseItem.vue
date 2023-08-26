@@ -52,21 +52,23 @@ const saveExpense = debounce(() => {
 	<tr class="table-grid">
 		<td class="date-col">
 			<input :id="`editing-date-input-${expenseRef.id}`" ref="dateRef" class="date-input" type="date"
-				name="date-picker" required @change="saveExpense" />
+				name="date-picker" required @change="saveExpense">
 		</td>
 		<td class="category-col">
 			<select :id="`editing-date-input-${expenseRef.id}`" ref="categoryRef" name="categories" class="category-input"
 				required @change="saveExpense">
-				<option v-for="c in categories" :value="c.id">{{ c.name }}</option>
+				<option v-for="c in categories" :value="c.id">
+					{{ c.name }}
+				</option>
 			</select>
 		</td>
 		<td class="title-col">
 			<input id="title-input" ref="titleRef" type="text" name="title" placeholder="'Summit Garden'"
-				class="title-input" required @input="saveExpense" />
+				class="title-input" required @input="saveExpense">
 		</td>
 		<td class="cost-col">
 			<input id="cost-input" ref="costRef" type="number" name="cost" min="0" step="0.01" placeholder="0"
-				class="cost-input" required @input="saveExpense" />
+				class="cost-input" required @input="saveExpense">
 		</td>
 	</tr>
 </template>

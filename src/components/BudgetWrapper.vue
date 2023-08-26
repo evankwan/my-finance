@@ -38,34 +38,46 @@ const totalBudget = computed(() => {
 <template>
 	<div class="budget-inner-wrapper">
 		<div class="budget-form-wrapper">
-			<h2 class="budget-name">Budget: {{ currentBudget.name }}</h2>
+			<h2 class="budget-name">
+				Budget: {{ currentBudget.name }}
+			</h2>
 			<table class="category-list">
 				<tr class="category-list-row">
-					<th id="name-heading" class="name-col">Category name</th>
-					<th id="amount-heading" class="amount-col">Amount</th>
-					<th id="action-heading" class="action-col action-col-header">Action</th>
+					<th id="name-heading" class="name-col">
+						Category name
+					</th>
+					<th id="amount-heading" class="amount-col">
+						Amount
+					</th>
+					<th id="action-heading" class="action-col action-col-header">
+						Action
+					</th>
 				</tr>
 				<tr class="category-list-row">
 					<td class="name-col">
-						<input v-model="newCategoryName" class="category-name-input" type="text" required />
+						<input v-model="newCategoryName" class="category-name-input" type="text" required>
 					</td>
 					<td class="amount-col">
 						<input v-model="newCategoryAmount" class="category-amount-input" type="number" name="cost" min="0"
-							step="0.01" placeholder="$0" required />
+							step="0.01" placeholder="$0" required>
 					</td>
 					<td class="action-col">
-						<button class="add-category-button" @click="handleAddNewCategory">Add +</button>
+						<button class="add-category-button" @click="handleAddNewCategory">
+							Add +
+						</button>
 					</td>
 				</tr>
 				<tr v-for="category in categories" class="category-list-row">
 					<td class="name-col">
 						{{ category.name }}
 					</td>
-					<td class="amount-col">$ {{ category.amount }}</td>
-					<td class="action-col"></td>
-					<td></td>
+					<td class="amount-col">
+						$ {{ category.amount }}
+					</td>
+					<td class="action-col" />
+					<td />
 				</tr>
-				<hr />
+				<hr>
 				<tr class="category-list-row">
 					<td class="name-col">
 						Total

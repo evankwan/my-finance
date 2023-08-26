@@ -63,20 +63,68 @@ const errorMessages = computed(() => {
 </script>
 
 <template>
-  <form id="expense-form" @submit.prevent="handleAddExpense">
+  <form
+    id="expense-form"
+    @submit.prevent="handleAddExpense"
+  >
     <div class="expense-form">
-      <input id="date-input" v-model="date" class="date-input" type="date" name="date-picker" required />
-      <select id="categories" v-model="category" name="categories" class="category-input" required>
-        <option v-for="c in categories" :value="c.id">{{ c.name }}</option>
+      <input
+        id="date-input"
+        v-model="date"
+        class="date-input"
+        type="date"
+        name="date-picker"
+        required
+      >
+      <select
+        id="categories"
+        v-model="category"
+        name="categories"
+        class="category-input"
+        required
+      >
+        <option
+          v-for="c in categories"
+          :value="c.id"
+        >
+          {{ c.name }}
+        </option>
       </select>
-      <input id="title-input" v-model="title" type="text" name="title" placeholder="'Summit Garden'" class="title-input"
-        required />
-      <input id="cost-input" v-model="cost" type="number" name="cost" min="0" step="0.01" placeholder="$0"
-        class="cost-input" required />
-      <button class="submit-button">Enter</button>
+      <input
+        id="title-input"
+        v-model="title"
+        type="text"
+        name="title"
+        placeholder="'Summit Garden'"
+        class="title-input"
+        required
+      >
+      <input
+        id="cost-input"
+        v-model="cost"
+        type="number"
+        name="cost"
+        min="0"
+        step="0.01"
+        placeholder="$0"
+        class="cost-input"
+        required
+      >
+      <button class="submit-button">
+        Enter
+      </button>
     </div>
-    <div id="error-messages-container" class="error-messages-container">
-      <p v-if="isShowingError" v-for="message in errorMessages" class="error-message">{{ message }}</p>
+    <div
+      id="error-messages-container"
+      class="error-messages-container"
+    >
+      <p
+        v-if="isShowingError"
+        v-for="message in errorMessages"
+        class="error-message"
+      >
+        {{ message }}
+      </p>
     </div>
   </form>
 </template>

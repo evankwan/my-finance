@@ -14,11 +14,15 @@ const categories = computed(() => {
 	<div class="categoriesList-wrapper">
 		<ol>
 			<li class="category-item">
-				<span class="id-field">ID</span>
+				<span class="id-field">
+					ID
+				</span>
 				<span>Category name</span>
 			</li>
 			<li v-for="{ name, id } in categories" :key="`category-${id}`" class="category-item">
-				<span class="id-field">{{ id }}</span>
+				<span class="id-field">
+					{{ id }}
+				</span>
 				<span>{{ name }}</span>
 			</li>
 		</ol>
