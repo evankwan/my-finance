@@ -58,7 +58,9 @@ const totalBudget = computed(() => {
 					</td>
 				</tr>
 				<tr v-for="category in categories" class="category-list-row">
-					<td class="name-col">{{ category.name }}</td>
+					<td class="name-col">
+						{{ category.name }}
+					</td>
 					<td class="amount-col">$ {{ category.amount }}</td>
 					<td class="action-col"></td>
 					<td></td>

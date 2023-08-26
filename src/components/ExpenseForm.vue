@@ -14,51 +14,51 @@ const title = ref("")
 const cost = ref(0)
 
 const handleAddExpense = async (e) => {
-  e.preventDefault()
-  if (errorMessages.value.length) {
-    isShowingError.value = true;
-    return;
-  }
-  isShowingError.value = false;
+	e.preventDefault()
+	if (errorMessages.value.length) {
+		isShowingError.value = true;
+		return;
+	}
+	isShowingError.value = false;
 
-  const offset = new Date(Date.now()).getTimezoneOffset() / 60
-  const expenseDate = new Date(date.value)
-  expenseDate.setHours(expenseDate.getHours() + offset)
-  const chosenCategory = categories.value.find((c) => c.id === category.value)
-  const expense = {
-    id: expensesStore.list.length + 1,
-    date: formatDateToTimestamp(expenseDate),
-    cost: cost.value.toFixed(2),
-    title: title.value,
-    category: chosenCategory?.id ?? 1
-  }
-  await expensesStore.addExpense(expense)
-  await expensesStore.getExpenses()
-  clearForm()
+	const offset = new Date(Date.now()).getTimezoneOffset() / 60
+	const expenseDate = new Date(date.value)
+	expenseDate.setHours(expenseDate.getHours() + offset)
+	const chosenCategory = categories.value.find((c) => c.id === category.value)
+	const expense = {
+		id: expensesStore.list.length + 1,
+		date: formatDateToTimestamp(expenseDate),
+		cost: cost.value.toFixed(2),
+		title: title.value,
+		category: chosenCategory?.id ?? 1
+	}
+	await expensesStore.addExpense(expense)
+	await expensesStore.getExpenses()
+	clearForm()
 }
 const clearForm = () => {
-  title.value = ""
-  cost.value = 0
-  category.value = 1
+	title.value = ""
+	cost.value = 0
+	category.value = 1
 }
 
 const isShowingError = ref(false)
 const errorMessages = computed(() => {
-  const messages = []
+	const messages = []
 
-  if (!title.value.length) {
-    messages.push("Your expense name field must have at least 1 character")
-  }
-  if (typeof cost.value !== "number") {
-    messages.push("You must enter a number in the cost field")
-  }
-  if (typeof category.value !== "number") {
-    messages.push("You must enter a valid category")
-  }
-  if (!messages.length) {
-    isShowingError.value = false;
-  }
-  return messages
+	if (!title.value.length) {
+		messages.push("Your expense name field must have at least 1 character")
+	}
+	if (typeof cost.value !== "number") {
+		messages.push("You must enter a number in the cost field")
+	}
+	if (typeof category.value !== "number") {
+		messages.push("You must enter a valid category")
+	}
+	if (!messages.length) {
+		isShowingError.value = false;
+	}
+	return messages
 })
 </script>
 
