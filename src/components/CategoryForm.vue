@@ -12,7 +12,12 @@ const handleSubmit = async () => {
 
 <template>
 	<form @submit.prevent="handleSubmit">
-		<input v-model="newCategoryName" type="text" name="newCategory" id="new-category-input">
+		<input
+			v-model="newCategoryName"
+			type="text"
+			name="newCategory"
+			id="new-category-input"
+		>
 		<button>Add new category</button>
 	</form>
 </template>

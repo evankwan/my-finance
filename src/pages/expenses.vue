@@ -14,7 +14,10 @@ onMounted(async () => {
 
 <template>
 	<div class="expenses-wrapper">
-		<PageHeader id="expenses-header" heading="Expenses" />
+		<PageHeader
+			id="expenses-header"
+			heading="Expenses"
+		/>
 		<main>
 			<ExpenseForm id="expenses-form" />
 			<ExpensesList id="expenses-list" />

@@ -14,13 +14,22 @@ const sidebarLinks = computed(() => ([
 <template>
 	<aside class="sidebar wrapper-border">
 		<h2 id="sidebar-title">
-			<RouterLink to="/" class="sidebar-item-link">
+			<RouterLink
+				to="/"
+				class="sidebar-item-link"
+			>
 				MyFinance
 			</RouterLink>
 		</h2>
 		<ul class="sidebar-links">
-			<li v-for="link in sidebarLinks" class="sidebar-item">
-				<RouterLink :to="link.path" class="sidebar-item-link">
+			<li
+				v-for="link in sidebarLinks"
+				class="sidebar-item"
+			>
+				<RouterLink
+					:to="link.path"
+					class="sidebar-item-link"
+				>
 					{{ link.name }}
 				</RouterLink>
 			</li>

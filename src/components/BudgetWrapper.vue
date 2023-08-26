@@ -43,31 +43,59 @@ const totalBudget = computed(() => {
 			</h2>
 			<table class="category-list">
 				<tr class="category-list-row">
-					<th id="name-heading" class="name-col">
+					<th
+						id="name-heading"
+						class="name-col"
+					>
 						Category name
 					</th>
-					<th id="amount-heading" class="amount-col">
+					<th
+						id="amount-heading"
+						class="amount-col"
+					>
 						Amount
 					</th>
-					<th id="action-heading" class="action-col action-col-header">
+					<th
+						id="action-heading"
+						class="action-col action-col-header"
+					>
 						Action
 					</th>
 				</tr>
 				<tr class="category-list-row">
 					<td class="name-col">
-						<input v-model="newCategoryName" class="category-name-input" type="text" required>
+						<input
+							v-model="newCategoryName"
+							class="category-name-input"
+							type="text"
+							required
+						>
 					</td>
 					<td class="amount-col">
-						<input v-model="newCategoryAmount" class="category-amount-input" type="number" name="cost" min="0"
-							step="0.01" placeholder="$0" required>
+						<input
+							v-model="newCategoryAmount"
+							class="category-amount-input"
+							type="number"
+							name="cost"
+							min="0"
+							step="0.01"
+							placeholder="$0"
+							required
+						>
 					</td>
 					<td class="action-col">
-						<button class="add-category-button" @click="handleAddNewCategory">
+						<button
+							class="add-category-button"
+							@click="handleAddNewCategory"
+						>
 							Add +
 						</button>
 					</td>
 				</tr>
-				<tr v-for="category in categories" class="category-list-row">
+				<tr
+					v-for="category in categories"
+					class="category-list-row"
+				>
 					<td class="name-col">
 						{{ category.name }}
 					</td>

@@ -4,10 +4,16 @@
 
 <template>
 	<div class="welcome-container">
-		<h1 id="welcome-title" class="welcome-title">
+		<h1
+			id="welcome-title"
+			class="welcome-title"
+		>
 			Welcome to MyFinance
 		</h1>
-		<h2 id="welcome-subtitle" class="welcome-subtitle">
+		<h2
+			id="welcome-subtitle"
+			class="welcome-subtitle"
+		>
 			What do you want to do today?
 		</h2>
 		<div class="buttons-container">

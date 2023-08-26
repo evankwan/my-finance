@@ -43,12 +43,19 @@ export default [
 			"no-duplicate-imports": "error",
 			"no-multi-spaces": 2,
 			"no-param-reassign": "error",
+			"vue/html-indent": ["error", "tab", {
+				"attribute": 1,
+				"baseIndent": 1,
+				"closeBracket": 0,
+				"alignAttributesVertically": true,
+				"ignores": []
+			}],
+			"vue/multi-word-component-names": "off",
 			"vue/singleline-html-element-content-newline": ["error", {
 				"ignoreWhenNoAttributes": true,
 				"ignoreWhenEmpty": true,
 				"ignores": ["pre", "textarea"]
 			}],
-			"vue/multi-word-component-names": "off",
 		}
 	}
 ]

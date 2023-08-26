@@ -6,7 +6,10 @@ import CategoryForm from "@/components/CategoryForm.vue"
 
 <template>
 	<div class="categories-wrapper">
-		<PageHeader id="categories-header" heading="Categories" />
+		<PageHeader
+			id="categories-header"
+			heading="Categories"
+		/>
 		<main>
 			<CategoryForm />
 			<CategoriesList />

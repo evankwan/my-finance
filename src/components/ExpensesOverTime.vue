@@ -88,15 +88,27 @@ const chartData = computed(() => {
 <template>
 	<div>
 		<h2>Expenses over time</h2>
-		<select id="expenses-over-time-months" name="expenses over time months" @change="setMonth">
-			<option v-for="number in possibleTimeSpan" :value="number" :selected="number === 3">
+		<select
+			id="expenses-over-time-months"
+			name="expenses over time months"
+			@change="setMonth"
+		>
+			<option
+				v-for="number in possibleTimeSpan"
+				:value="number"
+				:selected="number === 3"
+			>
 				{{ number }}
 			</option>
 		</select>
 		<label class="input-label">
 			months
 		</label>
-		<LineGraph id="chart" :options="chartOptions" :data="chartData" />
+		<LineGraph
+			id="chart"
+			:options="chartOptions"
+			:data="chartData"
+		/>
 	</div>
 </template>
 

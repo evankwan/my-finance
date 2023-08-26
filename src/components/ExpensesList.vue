@@ -15,22 +15,42 @@ const handleUpdatedExpense = async ({ expense }) => {
 </script>
 
 <template>
-	<table id="expenses-list" class="expenses-list">
+	<table
+		id="expenses-list"
+		class="expenses-list"
+	>
 		<tr class="table-grid header-row">
-			<th id="date-col" class="date-col">
+			<th
+				id="date-col"
+				class="date-col"
+			>
 				Date
 			</th>
-			<th id="category-col" class="category-col">
+			<th
+				id="category-col"
+				class="category-col"
+			>
 				Category
 			</th>
-			<th id="title-col" class="title-col">
+			<th
+				id="title-col"
+				class="title-col"
+			>
 				Name
 			</th>
-			<th id="cost-col" class="cost-col">
+			<th
+				id="cost-col"
+				class="cost-col"
+			>
 				Cost
 			</th>
 		</tr>
-		<ExpenseItem v-for="expense in list" class="expense-item" :expense="expense" @save-expense="handleUpdatedExpense" />
+		<ExpenseItem
+			v-for="expense in list"
+			class="expense-item"
+			:expense="expense"
+			@save-expense="handleUpdatedExpense"
+		/>
 	</table>
 </template>
 

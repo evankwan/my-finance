@@ -15,7 +15,10 @@ onMounted(async () => {
 
 <template>
 	<div class="chart-wrapper">
-		<PageHeader id="expenses-header" heading="Charts" />
+		<PageHeader
+			id="expenses-header"
+			heading="Charts"
+		/>
 		<main>
 			<ExpensesOverTime :expenses="expenses" />
 		</main>

@@ -19,7 +19,11 @@ const categories = computed(() => {
 				</span>
 				<span>Category name</span>
 			</li>
-			<li v-for="{ name, id } in categories" :key="`category-${id}`" class="category-item">
+			<li
+				v-for="{ name, id } in categories"
+				:key="`category-${id}`"
+				class="category-item"
+			>
 				<span class="id-field">
 					{{ id }}
 				</span>

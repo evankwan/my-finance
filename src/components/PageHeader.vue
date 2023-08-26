@@ -9,7 +9,10 @@ const props = defineProps({
 
 <template>
 	<header class="header-container">
-		<h1 id="expenses-title" class="welcome-title">
+		<h1
+			id="expenses-title"
+			class="welcome-title"
+		>
 			{{ props.heading }}
 		</h1>
 	</header>

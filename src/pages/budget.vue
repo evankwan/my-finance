@@ -5,7 +5,10 @@ import BudgetWrapper from "@/components/BudgetWrapper.vue"
 
 <template>
 	<div class="budget-wrapper">
-		<PageHeader id="budget-header" heading="Budget" />
+		<PageHeader
+			id="budget-header"
+			heading="Budget"
+		/>
 		<main>
 			<BudgetWrapper />
 		</main>
