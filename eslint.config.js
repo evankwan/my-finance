@@ -1,18 +1,24 @@
 import globals from "globals";
+import eslintPluginVue from "eslint-plugin-vue"
+import vueParser from "vue-eslint-parser"
+
+const { base: vueBase, recommended: vueRecommended } = eslintPluginVue.configs
 
 export default [
-	"eslint:recommended",
 	{
+		files: [
+			"src/**/*.{js,vue}",
+		],
+		plugins: {
+			"globals/browser": globals.browser,
+			"plugin:vue/base": vueBase,
+			"plugin:vue/vue3-recommended": vueRecommended,
+		},
+		// 	globals: globals.browser,
+		// 	vue: eslintPluginVue,
+		// },
 		"languageOptions": {
-			"globals": {
-				...globals.browser,
-				"vi": "readonly",
-				"describe": "readonly",
-				"it": "readonly",
-				"expect": "readonly",
-				"afterEach": "readonly",
-				"beforeEach": "readonly",
-			}
+			"parser": vueParser,
 		},
 		"rules": {
 			"array-bracket-spacing": 2,
@@ -24,7 +30,8 @@ export default [
 			],
 			"no-duplicate-imports": "error",
 			"no-multi-spaces": 2,
-			"no-param-reassign": "error"
+			"no-param-reassign": "error",
+
 		}
 	}
 ]
