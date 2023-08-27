@@ -49,7 +49,7 @@ const handleUpdateCategory = async ({ category }) => {
 <template>
 	<div class="budget-inner-wrapper">
 		<div class="budget-form-wrapper">
-			<h2 class="budget-name">
+			<h2 id="budget-name" class="budget-name">
 				Budget: {{ currentBudget.name }}
 			</h2>
 			<table class="category-list">
@@ -93,6 +93,7 @@ const handleUpdateCategory = async ({ category }) => {
 					</td>
 					<td class="amount-col">
 						<input
+							id="new-category-amount"
 							v-model="newCategoryAmount"
 							class="category-amount-input"
 							type="number"
@@ -105,6 +106,7 @@ const handleUpdateCategory = async ({ category }) => {
 					</td>
 					<td class="action-col">
 						<button
+							id="add-category-button"
 							class="add-category-button"
 							@click="handleAddNewCategory"
 						>
@@ -114,7 +116,8 @@ const handleUpdateCategory = async ({ category }) => {
 				</tr>
 				<BudgetItem
 					v-for="category in categories"
-					:key="`category=${category.id}`"
+					:key="`category-${category.id}`"
+					:id="`category-${category.id}`"
 					:category="category"
 					@save-category="handleUpdateCategory"
 				/>
@@ -123,7 +126,10 @@ const handleUpdateCategory = async ({ category }) => {
 					<td class="name-col">
 						Total
 					</td>
-					<td class="amount-col">
+					<td
+						id="total-budget"
+						class="amount-col"
+					>
 						$ {{ totalBudget }}
 					</td>
 				</tr>
