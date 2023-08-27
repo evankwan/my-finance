@@ -64,10 +64,10 @@ it("adds a new budget category with the chosen category and input amount", async
 	const { saveCategory } = useBudgetsStore()
 	await flushPromises()
 
-	const newCategory = expenseCategories[1].id
+	const newCategory = expenseCategories[2].id
 	const newAmount = 1000
-	wrapper.find("#new-category-categories").setValue(newCategory)
-	wrapper.find("#new-category-amount").setValue(newAmount)
+	await wrapper.find("#new-category-categories").setValue(newCategory)
+	await wrapper.find("#new-category-amount").setValue(newAmount)
 	await wrapper.find("#add-category-button").trigger("click")
 
 	expect(saveCategory).toHaveBeenCalledWith(
@@ -82,14 +82,32 @@ it("resets the category form after submitting a new budget category", async() =>
 	const wrapper = getWrapper()
 	await flushPromises()
 
-	const newCategory = expenseCategories[1].id
+	const newCategory = expenseCategories[2].id
 	const newAmount = 1000
-	wrapper.find("#new-category-categories").setValue(newCategory)
-	wrapper.find("#new-category-amount").setValue(newAmount)
+	await wrapper.find("#new-category-categories").setValue(newCategory)
+	await wrapper.find("#new-category-amount").setValue(newAmount)
 	await wrapper.find("#add-category-button").trigger("click")
 
 	expect(wrapper.find("#new-category-categories").wrapperElement.value).toEqual("1");
 	expect(wrapper.find("#new-category-amount").wrapperElement.value).toBe("0");
+})
+it("does not save a category if that category has already been added to the budget", async() => {
+	const wrapper = getWrapper()
+	const { saveCategory } = useBudgetsStore()
+	await flushPromises()
+
+	const alreadyUsedCategory = expenseCategories[1].id
+	const newCategory = expenseCategories[2].id
+	const newAmount = 1000
+	wrapper.find("#new-category-categories").setValue(alreadyUsedCategory)
+	await wrapper.find("#new-category-amount").setValue(newAmount)
+	await wrapper.find("#add-category-button").trigger("click")
+
+	expect(saveCategory).not.toHaveBeenCalled()
+
+	await wrapper.find("#new-category-categories").setValue(newCategory)
+	await wrapper.find("#add-category-button").trigger("click")
+	expect(saveCategory).toHaveBeenCalled()
 })
 it("updates the category when the budget items emit save-category", async() => {
 	const wrapper = getWrapper()

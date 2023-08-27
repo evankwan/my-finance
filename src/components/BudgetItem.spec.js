@@ -9,7 +9,7 @@ enableAutoUnmount(afterEach)
 
 const defaultProps = {
 	category: {
-		id: 4,
+		id: 1,
 		name: "budget category 1",
 		expense_category: 1,
 		amount: 200,
@@ -22,15 +22,27 @@ const categories = [
 	{ id: 2, name: "category 2" },
 	{ id: 3, name: "category 3" },
 ]
+const budgetCategories = [
+	{
+		amount: 200,
+		budget_id: 1,
+		expense_category: 1,
+		id: 1,
+		name: "budget category 1",
+	},
+]
 
 const getWrapper = (props = defaultProps) => mount(BudgetItem, {
 	shallow: true,
 	global: {
 		plugins: [createTestingPinia({
 			initialState: {
+				budgets: {
+					categories: budgetCategories,
+				},
 				expenses: {
 					categories,
-				}
+				},
 			}
 		})],
 	},
@@ -48,12 +60,12 @@ it("displays a dropdown with all the available expense categories, defaulting to
 	const wrapper = getWrapper();
 	expect(wrapper.findAll("option")).toHaveLength(categories.length)
 })
-it("saves the budget category when updating the expense category", () => {
+it("saves the budget category when updating the expense category", async() => {
 	const wrapper = getWrapper();
 	expect(wrapper.emitted("saveCategory")).toBeUndefined()
 
 	const newExpenseCategory = categories[1].id;
-	wrapper.find("#edit-category-categories").setValue(newExpenseCategory)
+	await wrapper.find("#edit-category-categories").setValue(newExpenseCategory)
 	vi.advanceTimersByTime(DEFAULT_DEBOUNCE_TIME)
 	expect(wrapper.emitted("saveCategory")).toHaveLength(1)
 	expect(wrapper.emitted("saveCategory")[0][0]).toStrictEqual(

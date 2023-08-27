@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from "vue"
+import { ref, computed, onMounted, watch } from "vue"
 
 import BudgetItem from "@/components/BudgetItem.vue"
 
@@ -9,6 +9,8 @@ import { DEFAULT_BUDGET_ID } from "@/utilities/constants.js"
 
 const budgetsStore = useBudgetsStore()
 const expensesStore = useExpensesStore()
+
+const errorMessage = ref(null)
 
 const expenseCategories = computed(() => expensesStore.categories)
 
@@ -24,7 +26,20 @@ onMounted(async () => {
 
 const expenseCategory = ref(1)
 const newCategoryAmount = ref(0)
+watch(expenseCategory, (val) => {
+	const categoryAlreadyExists = categories.value.some((c) => {
+		console.log(c.expense_category)
+		console.log(val)
+		return Number(c.expense_category) === Number(val)
+	})
+	errorMessage.value = categoryAlreadyExists ?
+		"Category has already been budgeted" :
+		null
+})
 const handleAddNewCategory = async () => {
+	if (errorMessage.value) {
+		return
+	}
 	await budgetsStore.saveCategory(currentBudget.value.id, {
 		expenseCategory: expenseCategory.value,
 		amount: newCategoryAmount.value,
@@ -43,7 +58,15 @@ const totalBudget = computed(() => {
 const handleUpdateCategory = async ({ category }) => {
 	await budgetsStore.updateCategory(category)
 	await budgetsStore.getCategories(DEFAULT_BUDGET_ID)
-} 
+}
+const unsavedChanges = ref([])
+const handleUnsavedChange = (category) => {
+	// search for existing category
+	// replace existing category or push
+	// pass unsaved changes into budgetitems
+	// check for unsaved changes in budgetitem - if new changes are good, emit
+	// watch categories in budgetitems, if changes are good emit
+}
 </script>
 
 <template>
@@ -90,6 +113,12 @@ const handleUpdateCategory = async ({ category }) => {
 								{{ c.name }}
 							</option>
 						</select>
+						<p 
+							v-if="errorMessage"
+							class="error-message"
+						>
+							{{ errorMessage }}
+						</p>
 					</td>
 					<td class="amount-col">
 						<input
@@ -120,6 +149,7 @@ const handleUpdateCategory = async ({ category }) => {
 					:id="`category-${category.id}`"
 					:category="category"
 					@save-category="handleUpdateCategory"
+					@unsaved-change="handleUnsavedChange"
 				/>
 				<hr>
 				<tr class="category-list-row">
@@ -185,7 +215,7 @@ const handleUpdateCategory = async ({ category }) => {
 	grid-column: 5 / span 1;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	text-align: left;
 }
 
@@ -214,5 +244,8 @@ hr {
 .category-amount-input::-webkit-outer-spin-button,
 .category-amount-input::-webkit-inner-spin-button {
 	display: none;
+}
+.error-message {
+	color: #e23535;
 }
 </style>

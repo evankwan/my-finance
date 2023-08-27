@@ -1,13 +1,15 @@
 <script setup>
-import { ref, toRef, computed } from "vue"
+import { ref, toRef, computed, watch, nextTick } from "vue"
 import { debounce } from "lodash"
 
+import { useBudgetsStore } from "@/store/budgets"
 import { useExpensesStore } from "@/store/expenses"
 import { DEFAULT_DEBOUNCE_TIME } from "@/utilities/constants.js"
 
+const budgetsStore = useBudgetsStore()
 const expensesStore = useExpensesStore()
 
-const emit = defineEmits(["saveCategory"])
+const emit = defineEmits(["saveCategory", "unsavedChange"])
 const props = defineProps({
 	category: {
 		required: true,
@@ -16,12 +18,28 @@ const props = defineProps({
 })
 const budgetCategoryRef = toRef(props, "category")
 
+const budgetCategories = computed(() => budgetsStore.categories)
 const expenseCategories = computed(() => expensesStore.categories)
 
 const category = ref(budgetCategoryRef.value.expense_category)
 const amount = ref(budgetCategoryRef.value.amount)
-
+const errorMessage = ref(null)
+watch(category, async() => {
+	const categoryAlreadyExists = budgetCategories.value.some((c) => Number(c.expense_category) === Number(category.value) && c.id !== props.category.id)
+	errorMessage.value = categoryAlreadyExists ?
+		"Category has already been budgeted" :
+		null
+	emit("unsavedChange", {
+		amount: amount.value,
+		budget_id: budgetCategoryRef.value.budget_id,
+		expenseCategory: expenseCategories.value.find((c) => c.id === Number(category.value)).id,
+		id: budgetCategoryRef.value.id,
+	})
+})
 const saveCategory = debounce(() => {
+	if (errorMessage.value) {
+		return
+	}
 	emit("saveCategory", {
 		category: {
 			amount: amount.value,
@@ -52,6 +70,12 @@ const saveCategory = debounce(() => {
 					{{ c.name }}
 				</option>
 			</select>
+			<p 
+				v-if="errorMessage"
+				class="error-message"
+			>
+				{{ errorMessage }}
+			</p>
 		</td>
 		<td class="amount-col">
 			<input
@@ -118,5 +142,8 @@ const saveCategory = debounce(() => {
 }
 .amount-col .category-input {
 	text-align: right;
+}
+.error-message {
+	color: #e23535;
 }
 </style>
