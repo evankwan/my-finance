@@ -14,71 +14,118 @@ const title = ref("")
 const cost = ref(0)
 
 const handleAddExpense = async (e) => {
-  e.preventDefault()
-  if (errorMessages.value.length) {
-    isShowingError.value = true;
-    return;
-  }
-  isShowingError.value = false;
+	e.preventDefault()
+	if (errorMessages.value.length) {
+		isShowingError.value = true;
+		return;
+	}
+	isShowingError.value = false;
 
-  const offset = new Date(Date.now()).getTimezoneOffset() / 60
-  const expenseDate = new Date(date.value)
-  expenseDate.setHours(expenseDate.getHours() + offset)
-  const chosenCategory = categories.value.find((c) => c.id === category.value)
-  const expense = {
-    id: expensesStore.list.length + 1,
-    date: formatDateToTimestamp(expenseDate),
-    cost: cost.value.toFixed(2),
-    title: title.value,
-    category: chosenCategory?.id ?? 1
-  }
-  await expensesStore.addExpense(expense)
-  await expensesStore.getExpenses()
-  clearForm()
+	const offset = new Date(Date.now()).getTimezoneOffset() / 60
+	const expenseDate = new Date(date.value)
+	expenseDate.setHours(expenseDate.getHours() + offset)
+	const chosenCategory = categories.value.find((c) => c.id === category.value)
+	const expense = {
+		id: expensesStore.list.length + 1,
+		date: formatDateToTimestamp(expenseDate),
+		cost: cost.value.toFixed(2),
+		title: title.value,
+		category: chosenCategory?.id ?? 1
+	}
+	await expensesStore.addExpense(expense)
+	await expensesStore.getExpenses()
+	clearForm()
 }
 const clearForm = () => {
-  title.value = ""
-  cost.value = 0
-  category.value = 1
+	title.value = ""
+	cost.value = 0
+	category.value = 1
 }
 
 const isShowingError = ref(false)
 const errorMessages = computed(() => {
-  const messages = []
+	const messages = []
 
-  if (!title.value.length) {
-    messages.push("Your expense name field must have at least 1 character")
-  }
-  if (typeof cost.value !== "number") {
-    messages.push("You must enter a number in the cost field")
-  }
-  if (typeof category.value !== "number") {
-    messages.push("You must enter a valid category")
-  }
-  if (!messages.length) {
-    isShowingError.value = false;
-  }
-  return messages
+	if (!title.value.length) {
+		messages.push("Your expense name field must have at least 1 character")
+	}
+	if (typeof cost.value !== "number") {
+		messages.push("You must enter a number in the cost field")
+	}
+	if (typeof category.value !== "number") {
+		messages.push("You must enter a valid category")
+	}
+	return messages
 })
 </script>
 
 <template>
-  <form id="expense-form" @submit.prevent="handleAddExpense">
-    <div class="expense-form">
-      <input id="date-input" v-model="date" class="date-input" type="date" name="date-picker" required />
-      <select id="categories" v-model="category" name="categories" class="category-input" required>
-        <option v-for="c in categories" :value="c.id">{{ c.name }}</option>
-      </select>
-      <input id="title-input" v-model="title" type="text" name="title" placeholder="'Summit Garden'" class="title-input"
-        required />
-      <input id="cost-input" v-model="cost" type="number" name="cost" min="0" step="0.01" placeholder="$0"
-        class="cost-input" required />
-      <button class="submit-button">Enter</button>
-    </div>
-    <div id="error-messages-container" class="error-messages-container">
-      <p v-if="isShowingError" v-for="message in errorMessages" class="error-message">{{ message }}</p>
-    </div>
-  </form>
+	<form
+		id="expense-form"
+		@submit.prevent="handleAddExpense"
+	>
+		<div class="expense-form">
+			<input
+				id="date-input"
+				v-model="date"
+				class="date-input"
+				type="date"
+				name="date-picker"
+				required
+			>
+			<select
+				id="categories"
+				v-model="category"
+				name="categories"
+				class="category-input"
+				required
+			>
+				<option
+					v-for="c in categories"
+					:key="`category-${c.id}`"
+					:value="c.id"
+				>
+					{{ c.name }}
+				</option>
+			</select>
+			<input
+				id="title-input"
+				v-model="title"
+				type="text"
+				name="title"
+				placeholder="'Summit Garden'"
+				class="title-input"
+				required
+			>
+			<input
+				id="cost-input"
+				v-model="cost"
+				type="number"
+				name="cost"
+				min="0"
+				step="0.01"
+				placeholder="$0"
+				class="cost-input"
+				required
+			>
+			<button class="submit-button">
+				Enter
+			</button>
+		</div>
+		<div
+			v-if="isShowingError"
+			id="error-messages-container"
+			class="error-messages-container"
+		>
+			<p
+				v-for="message in errorMessages"
+				:key="`error-message-${message}`"
+				class="error-message"
+			>
+				{{ message }}
+			</p>
+		</div>
+	</form>
 </template>
 
 <style scoped>

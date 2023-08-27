@@ -9,21 +9,24 @@ const expensesStore = useExpensesStore()
 const expenses = computed(() => expensesStore.list)
 
 onMounted(async () => {
-  await expensesStore.getCategories()
+	await expensesStore.getCategories()
 })
 </script>
 
 <template>
-  <div class="chart-wrapper">
-    <PageHeader id="expenses-header" heading="Charts" />
-    <main>
-      <ExpensesOverTime :expenses="expenses" />
-    </main>
-  </div>
+	<div class="chart-wrapper">
+		<PageHeader
+			id="expenses-header"
+			heading="Charts"
+		/>
+		<main>
+			<ExpensesOverTime :expenses="expenses" />
+		</main>
+	</div>
 </template>
 
 <style scoped>
 .chart-wrapper {
-  width: 100%;
+	width: 100%;
 }
 </style>
