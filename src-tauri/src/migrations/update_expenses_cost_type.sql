@@ -1,0 +1,3 @@
+ALTER TABLE expenses
+  ALTER COLUMN cost TYPE REAL
+  USING cost::REAL;

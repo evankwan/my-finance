@@ -1,0 +1,3 @@
+ALTER TABLE expenses
+  ALTER COLUMN date TYPE BIGINT
+  USING date::BIGINT;

@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "my-finance",
-  "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "version": "0.0.1",
+  "identifier": "com.my-finance-app.dev",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:4000",
@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "My Finance",
-        "width": 800,
-        "height": 600,
+        "width": 1200,
+        "height": 1000,
         "resizable": true,
         "fullscreen": false
       }
@@ -33,5 +33,10 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "sql": {
+      "preload": ["postgres:test.db"]
+    }
   }
 }
