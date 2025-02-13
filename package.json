@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@primevue/forms": "^4.2.5",
     "@primevue/themes": "^4.2.5",
     "@tauri-apps/plugin-sql": "^2.2.0",
     "date-fns": "^4.1.0",

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue"
+import { Form, type FormResolverOptions } from "@primevue/forms"
 import DatePicker from "primevue/datepicker"
 import InputText from "primevue/inputtext"
 import Select from "primevue/select"
@@ -18,7 +19,15 @@ const selectedCategory = ref()
 const expenses = computed(() => expensesStore.expenses)
 const categories = computed(() => expensesStore.categories)
 
-const handleClick = async() => {
+const handleSubmit = async() => {
+  if (
+    !date.value
+    || !title.value
+    || !selectedCategory.value
+    || !cost.value
+  ) {
+    return
+  }
   const expense = {
     date: Number(date.value),
     title: title.value,
@@ -39,7 +48,6 @@ onMounted(async() => {
     await expensesStore.getAllCategories(),
     await expensesStore.getExpenses(),
   ])
-  console.log(expensesStore.expenses);
 })
 </script>
 
@@ -49,36 +57,46 @@ onMounted(async() => {
       <h1>My Finance</h1>
     </header>
     <main>
-      <form class="form">
+      <Form
+        class="form"
+        @submit="handleSubmit"
+      >
         <DatePicker
           v-model="date"
+          name="date"
+          required
           class="date-picker"
         />
         <InputText
-          class="description"
-          type="text"
           v-model="title"
+          :formControl="{ validateOnSubmit: true }"
+          name="title"
+          type="text"
           placeholder="Expense description"
+          required
+          class="description"
         />
         <Select
           v-model="selectedCategory"
-          class="select"
+          name="category"
           :options="categories"
           option-label="name"
           placeholder="Category"
+          required
+          class="select"
         />
         <InputText
-          class="cost"
-          type="number"
           v-model="cost"
+          name="cost"
+          type="number"
           placeholder="Cost"
+          required
+          class="cost"
         />
-        <Button
-          @click="handleClick"
-        >
+        <Button type="submit">
           Submit
         </Button>
-      </form>
+      </Form>
 
       <DataTable
         v-if="expenses.length"
