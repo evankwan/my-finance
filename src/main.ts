@@ -6,6 +6,8 @@ import Aura from "@primevue/themes/aura"
 import "./style.css"
 import App from "./App.vue"
 
+import { router } from "./router"
+
 const init = () => {
   const pinia = createPinia()
   const app = createApp(App)
@@ -19,6 +21,7 @@ const init = () => {
       }
     }
   })
+  app.use(router)
   app.mount("#app")
 }
 init()
