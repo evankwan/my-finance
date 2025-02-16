@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import Menu from "primevue/menu";
+import Menu from "primevue/menu"
 
 const items = [
   {
       label: "Home",
-      icon: "pi pi-palette",
       route: "/"
   },
   {
       label: "Categories",
-      icon: "pi pi-categories",
       route: "/categories"
+  },
+  {
+      label: "Monthly recap",
+      route: "/monthly-recap"
   },
 ]
 </script>

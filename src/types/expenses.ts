@@ -4,3 +4,6 @@ export type AddExpensePayload = {
   category: null | number;
   cost: number;
 }
+export type ExpenseFiltersConfig = {
+  month?: number | null;
+}
