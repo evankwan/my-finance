@@ -2,7 +2,9 @@ import { defineStore } from "pinia"
 import { ref, computed, nextTick } from "vue"
 import { format } from "date-fns"
 
-import { getAll, add, getCategories, remove } from "../api/ExpensesApi.js"
+import { getAll, add, remove } from "../api/ExpensesAPI"
+import type { AddExpensePayload } from "../types/expenses"
+import { UNCATEGORIZED } from "../utilities/constants"
 
 export const useExpensesStore = defineStore("expenses", () => {
   const _expenses = ref([])
@@ -16,11 +18,13 @@ export const useExpensesStore = defineStore("expenses", () => {
     const formattedExpenses = _expenses.value.map((expense: any) => ({
       ...expense,
       date: format(new Date(expense.date), "yyyy, MMM dd"),
-      cost: expense.cost.toFixed(2)
+      cost: expense.cost.toFixed(2),
+      category: expense.category.id ? expense.category : UNCATEGORIZED,
     }))
+    console.log(formattedExpenses)
     return formattedExpenses
   })
-  const addExpense = async (expense: any) => {
+  const addExpense = async (expense: AddExpensePayload) => {
     const newExpense = await add(expense)
     return newExpense
   }
@@ -29,19 +33,9 @@ export const useExpensesStore = defineStore("expenses", () => {
     return
   }
 
-  const _categories = ref([])
-  const categories = computed(() => _categories.value)
-  const getAllCategories = async() => {
-    const res = await getCategories()
-    _categories.value = res
-    return _categories.value
-  }
-
   return {
     expenses,
     getExpenses,
-    getAllCategories,
-    categories,
     addExpense,
     removeExpense,
   }

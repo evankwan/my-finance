@@ -4,30 +4,33 @@ import { Form } from "@primevue/forms"
 import DatePicker from "primevue/datepicker"
 import InputText from "primevue/inputtext"
 import Select from "primevue/select"
+import Button from "primevue/button"
 
+import { useCategoriesStore } from "../store/categories"
 import { useExpensesStore } from "../store/expenses"
+import type { AddExpensePayload } from "../types/expenses"
 
-const expensesStore = useExpensesStore()
-const categories = computed(() => expensesStore.categories)
+const categoriesStore = useCategoriesStore()
+const categories = computed(() => categoriesStore.categories)
 
 const date = ref(new Date())
 const title = ref()
 const cost = ref()
 const selectedCategory = ref()
 
+const expensesStore = useExpensesStore()
 const handleSubmit = async() => {
   if (
     !date.value
     || !title.value
-    || !selectedCategory.value
     || !cost.value
   ) {
     return
   }
-  const expense = {
+  const expense: AddExpensePayload = {
     date: Number(date.value),
     title: title.value,
-    category: selectedCategory.value.id,
+    category: selectedCategory.value?.id || null,
     cost: Number(cost.value)
   }
   await expensesStore.addExpense(expense)

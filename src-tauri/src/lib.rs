@@ -22,6 +22,24 @@ pub fn run() {
             sql: include_str!("./migrations/3.sql"),
             kind: MigrationKind::Up,
         },
+        Migration {
+            version: 4,
+            description: "update_expenses_category_nullable",
+            sql: include_str!("./migrations/4.sql"),
+            kind: MigrationKind::Up,
+        },
+        Migration {
+            version: 5,
+            description: "update_expenses_category_fk_nullable",
+            sql: include_str!("./migrations/5.sql"),
+            kind: MigrationKind::Up,
+        },
+        Migration {
+            version: 6,
+            description: "remove_category_uncategorized",
+            sql: include_str!("./migrations/6.sql"),
+            kind: MigrationKind::Up,
+        },
     ];
 
     let _ = tauri::Builder::default()

@@ -24,7 +24,7 @@ const removeExpense = async(id: number) => {
       >
         <Column field="date" header="Date"/>
         <Column field="title" header="Description"/>
-        <Column field="category" header="Category"/>
+        <Column field="category.name" header="Category"/>
         <Column field="cost" header="Cost"/>
         <Column header="Action" class="action-column">
           <template #body="{ data: { id }}">

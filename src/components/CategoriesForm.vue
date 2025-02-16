@@ -4,15 +4,21 @@ import { Form } from "@primevue/forms"
 import InputText from "primevue/inputtext"
 import DataTable from "primevue/datatable"
 import Column from "primevue/column"
+import Button from "primevue/button"
 
-import { useExpensesStore } from "../store/expenses"
+import { useCategoriesStore } from "../store/categories"
 
-const expensesStore = useExpensesStore()
-const categories = computed(() => expensesStore.categories)
+const categoriesStore = useCategoriesStore()
+const categories = computed(() => categoriesStore.categories)
 
-const name = ref();
-const handleSubmit = () => {
-  console.log("submit")
+const name = ref<string>("");
+const handleSubmit = async() => {
+  const trimmedName = name.value.trim()
+  if (!trimmedName) {
+    return;
+  }
+
+  await categoriesStore.addCategory({ name: trimmedName })
 }
 
 const removeCategory = (id: number) => {

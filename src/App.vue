@@ -2,13 +2,15 @@
 import { onMounted } from "vue"
 import SideNavbar from "./components/SideNavbar.vue"
 
+import { useCategoriesStore } from "./store/categories"
 import { useExpensesStore } from "./store/expenses"
 
+const categoriesStore = useCategoriesStore()
 const expensesStore = useExpensesStore()
 
 onMounted(async() => {
   await Promise.all([
-    await expensesStore.getAllCategories(),
+    await categoriesStore.getAllCategories(),
     await expensesStore.getExpenses(),
   ])
 })
