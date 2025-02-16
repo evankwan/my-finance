@@ -62,8 +62,8 @@ export const useExpensesStore = defineStore("expenses", () => {
     category: expense.category.id ? expense.category : UNCATEGORIZED,
   });
   const expenses = computed<FormattedExpense[]>(() => _expenses.value.map(formatExpense))
-  const expensesMonthFilter = computed<number | null | undefined>(() => _expensesFilters.month)
-  const filteredExpenses = computed(() => _fitleredExpenses.value.map(formatExpense))
+  const expensesMonthFilter = computed<Date | null | undefined>(() => _expensesFilters.month)
+  const filteredExpenses = computed<FormattedExpense[]>(() => _fitleredExpenses.value.map(formatExpense))
 
   return {
     // state/getters

@@ -7,7 +7,7 @@ export type AddExpensePayload = {
   cost: number;
 }
 export type ExpenseFiltersConfig = {
-  month?: number | null;
+  month?: Date | null;
 }
 export type ExpenseFiltersApiPayload = {
   month?: string;

@@ -2,6 +2,8 @@
 import { ref, computed, watch } from "vue"
 import Panel from "primevue/panel"
 import DatePicker from "primevue/datepicker"
+import Chart from "primevue/chart"
+
 
 import { useExpensesStore } from "../store/expenses"
 
@@ -12,10 +14,34 @@ const totalExpensesForMonth = computed(() => {
   return `$${totalCost}`
 })
 
-const selectedMonth = ref()
-watch(selectedMonth, (month) => {
+const selectedMonth = ref(new Date())
+watch(selectedMonth, (month: Date) => {
   expensesStore.setExpensesFilters({ month })
+}, { immediate: true })
+
+const categories = computed(() => {
+  const array = expensesStore.filteredExpenses.map(({ category }) => category.name)
+  return [...new Set(array)]
 })
+const expensesByCategory = computed<number[]>(() => {
+  const categoryCostMap = expensesStore.filteredExpenses.reduce((acc: any, { cost, category }) => {
+    acc.get(category.name)
+      ? acc.set(category.name, Number(Number(acc.get(category.name)) + cost).toFixed(2))
+      : acc.set(category.name, Number(cost))
+    return acc
+  }, new Map())
+  return categories.value.map((category) => Number(categoryCostMap[category]))
+})
+const pieChartData = ref({
+  labels: categories.value,
+  datasets: [
+    {
+      label: "Dataset",
+      data: expensesByCategory.value,
+    }
+  ]
+})
+const pieChartOptions = ref()
 </script>
 
 <template>
@@ -30,6 +56,7 @@ watch(selectedMonth, (month) => {
           name="month"
           view="month"
           date-format="MM, yy"
+          placeholder="Select a month"
           class="month-expenses-header__left-panel-select"
         />
       </div>
@@ -41,7 +68,13 @@ watch(selectedMonth, (month) => {
       </Panel>
     </header>
     <section aria-label="monthly expenses by category">
-      Graph go here
+      <Chart
+        v-if="expensesByCategory.length"
+        type="pie"
+        :data="pieChartData"
+        :options="pieChartOptions"
+        class=""
+      />
     </section>
   </div>
 </template>
