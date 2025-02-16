@@ -1,24 +1,36 @@
 import { defineStore } from "pinia"
-import { ref, computed, nextTick, reactive } from "vue"
+import { ref, computed, nextTick, reactive, watch } from "vue"
 import { format } from "date-fns"
 
-import { getAll, add, remove } from "../api/ExpensesAPI"
-import type { AddExpensePayload, ExpenseFiltersConfig } from "../types/expenses"
+import { getAll, add, remove, getAllWithFilter } from "../api/ExpensesAPI"
+import type { Expense, FormattedExpense, AddExpensePayload, ExpenseFiltersConfig, ExpenseFiltersApiPayload } from "../types/expenses"
 import { UNCATEGORIZED } from "../utilities/constants"
 
 export const useExpensesStore = defineStore("expenses", () => {
   // state
-  const _expenses = ref([])
+  const _expenses = ref<Expense[]>([])
+  const _fitleredExpenses = ref<Expense[]>([])
   const _expensesFilters = reactive<ExpenseFiltersConfig>({
     month: null,
   })
 
   // actions
-  const getExpenses = async() => {
+  const getExpenses = async(): Promise<FormattedExpense[]> => {
     const res = await getAll()
     _expenses.value = res
     await nextTick()
     return expenses.value
+  }
+
+  const getExpensesWithFilter = async(filters: ExpenseFiltersConfig = {}): Promise<FormattedExpense[]> => {
+    const formattedFilters: ExpenseFiltersApiPayload = {}
+    if (filters?.month) {
+      formattedFilters.month = format(filters.month, "yyyy-MM-dd")
+    }
+    const res = await getAllWithFilter(formattedFilters)
+    _fitleredExpenses.value = res
+    await nextTick()
+    return filteredExpenses.value
   }
 
   const addExpense = async (expense: AddExpensePayload) => {
@@ -31,26 +43,27 @@ export const useExpensesStore = defineStore("expenses", () => {
     return
   }
 
-  const setExpensesFilters = (filters: ExpenseFiltersConfig = {}) => {
+  const setExpensesFilters = (filters: ExpenseFiltersConfig = {}): void => {
     Object.keys(filters).forEach((filter) => {
       _expensesFilters[filter] = filters[filter];
     })
   }
+  
+  // watchers
+  watch(_expensesFilters, async() => {
+    await getExpensesWithFilter(_expensesFilters)
+  })
 
   // getters
-  const expenses = computed(() => {
-    const formattedExpenses = _expenses.value.map((expense: any) => ({
-      ...expense,
-      date: format(new Date(expense.date), "yyyy, MMM dd"),
-      cost: expense.cost.toFixed(2),
-      category: expense.category.id ? expense.category : UNCATEGORIZED,
-    }))
-    return formattedExpenses
-  })
+  const formatExpense = (expense: any) => ({
+    ...expense,
+    date: format(new Date(expense.date), "yyyy, MMM dd"),
+    cost: expense.cost.toFixed(2),
+    category: expense.category.id ? expense.category : UNCATEGORIZED,
+  });
+  const expenses = computed<FormattedExpense[]>(() => _expenses.value.map(formatExpense))
   const expensesMonthFilter = computed<number | null | undefined>(() => _expensesFilters.month)
-  const expensesFilteredByMonth = computed(() => {
-    return
-  })
+  const filteredExpenses = computed(() => _fitleredExpenses.value.map(formatExpense))
 
   return {
     expenses,
@@ -59,6 +72,7 @@ export const useExpensesStore = defineStore("expenses", () => {
     removeExpense,
     setExpensesFilters,
     expensesMonthFilter,
-    expensesFilteredByMonth,
+    filteredExpenses,
+    getExpensesWithFilter,
   }
 })

@@ -1,3 +1,5 @@
+import { Category } from "./categories"
+
 export type AddExpensePayload = {
   date: number;
   title: string;
@@ -6,4 +8,21 @@ export type AddExpensePayload = {
 }
 export type ExpenseFiltersConfig = {
   month?: number | null;
+}
+export type ExpenseFiltersApiPayload = {
+  month?: string;
+}
+export type FormattedExpense = {
+  id: number;
+  title: string;
+  date: Date;
+  cost: number;
+  category: Category;
+}
+export type Expense = {
+  id: number;
+  title: string;
+  date: Date;
+  cost: number;
+  category: Category;
 }
