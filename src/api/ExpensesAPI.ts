@@ -19,9 +19,9 @@ export async function getAll() {
 }
 export async function add(expense: AddExpensePayload) {
 	const { date, title, category, cost } = expense
-	let categoryRef = "$2";
+	let categoryRef = "$2"
 	if (!category) {
-		categoryRef = "NULL";
+		categoryRef = "NULL"
 	}
 	const db = await Database.connect()
 	await db.execute(`INSERT INTO expenses (date, category, title, cost) VALUES ($1,${categoryRef},$3,$4)`, [

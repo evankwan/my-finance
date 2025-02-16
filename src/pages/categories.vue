@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CategoriesForm from '../components/CategoriesForm.vue';
+import CategoriesForm from '../components/CategoriesForm.vue'
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref, computed } from "vue"
 
-import { getCategories, addCategory } from "../api/CategoriesAPI"
+import { getCategories, addCategory, removeCategory } from "../api/CategoriesAPI"
 
 export const useCategoriesStore = defineStore("categories", () => {
   const _categories = ref<any[]>([])
@@ -16,10 +16,15 @@ export const useCategoriesStore = defineStore("categories", () => {
     await addCategory(name)
     return getAllCategories()
   }
+  const _removeCategory = async({ id }: { id: number }): Promise<any> => {
+    await removeCategory(id)
+    return getAllCategories()
+  }
 
   return {
     categories,
     getAllCategories,
     addCategory: _addCategory,
+    removeCategory: _removeCategory,
   }
 })

@@ -21,7 +21,6 @@ export const useExpensesStore = defineStore("expenses", () => {
       cost: expense.cost.toFixed(2),
       category: expense.category.id ? expense.category : UNCATEGORIZED,
     }))
-    console.log(formattedExpenses)
     return formattedExpenses
   })
   const addExpense = async (expense: AddExpensePayload) => {

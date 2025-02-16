@@ -1,5 +1,5 @@
-export const getMonthName = (index) => {
-	let name;
+export const getMonthName = (index: number) => {
+	let name
 	switch (index) {
 	case 0:
 		name = "January"
@@ -43,15 +43,15 @@ export const getMonthName = (index) => {
 	return name
 }
 
-export const subtractMonths = (month, subtract) => {
-	const remainder = month - subtract;
+export const subtractMonths = (month: number, subtract: number) => {
+	const remainder = month - subtract
 	return remainder >= 0 ? month - subtract : 12 - Math.abs(remainder)
 }
 
-export const formatDateToTimestamp = (date) => {
-	return Number(date);
+export const formatDateToTimestamp = (date: Date) => {
+	return Number(date)
 }
 
-export const formatTimestampToDate = (timestamp) => {
-	return new Date(timestamp / 1000);
+export const formatTimestampToDate = (timestamp: number) => {
+	return new Date(timestamp / 1000)
 }

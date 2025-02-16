@@ -11,3 +11,13 @@ export async function addCategory(category: string) {
 	])
 	return category
 }
+export async function removeCategory(id: number) {
+	if (typeof id !== "number") {
+		console.error("wrong type")
+		return
+	}
+
+	const db = await Database.connect()
+	await db.execute("DELETE FROM categories WHERE id = $1", [id])
+	return await db.execute(`UPDATE expenses SET category = NULL WHERE category = $1`, [id])
+}

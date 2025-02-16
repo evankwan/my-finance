@@ -7,22 +7,26 @@ import Column from "primevue/column"
 import Button from "primevue/button"
 
 import { useCategoriesStore } from "../store/categories"
+import { useExpensesStore } from "../store/expenses"
 
 const categoriesStore = useCategoriesStore()
 const categories = computed(() => categoriesStore.categories)
 
-const name = ref<string>("");
+const expensesStore = useExpensesStore()
+
+const name = ref<string>("")
 const handleSubmit = async() => {
   const trimmedName = name.value.trim()
   if (!trimmedName) {
-    return;
+    return
   }
 
   await categoriesStore.addCategory({ name: trimmedName })
 }
 
-const removeCategory = (id: number) => {
-  console.log(id)
+const removeCategory = async(id: number) => {
+  await categoriesStore.removeCategory({ id })
+  await expensesStore.getExpenses()
 }
 </script>
 
