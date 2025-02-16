@@ -58,7 +58,7 @@ export const useExpensesStore = defineStore("expenses", () => {
   const formatExpense = (expense: any) => ({
     ...expense,
     date: format(new Date(expense.date), "yyyy, MMM dd"),
-    cost: expense.cost.toFixed(2),
+    cost: Number(expense.cost.toFixed(2)),
     category: expense.category.id ? expense.category : UNCATEGORIZED,
   });
   const expenses = computed<FormattedExpense[]>(() => _expenses.value.map(formatExpense))
@@ -66,13 +66,16 @@ export const useExpensesStore = defineStore("expenses", () => {
   const filteredExpenses = computed(() => _fitleredExpenses.value.map(formatExpense))
 
   return {
+    // state/getters
     expenses,
+    expensesMonthFilter,
+    filteredExpenses,
+
+    // actions
     getExpenses,
     addExpense,
     removeExpense,
     setExpensesFilters,
-    expensesMonthFilter,
-    filteredExpenses,
     getExpensesWithFilter,
   }
 })
