@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from "vue"
+import { useRoute } from "vue-router"
+
 import SideNavbar from "./components/SideNavbar.vue"
 
 import { useCategoriesStore } from "./store/categories"
 import { useExpensesStore } from "./store/expenses"
+
+const route = useRoute()
 
 const categoriesStore = useCategoriesStore()
 const expensesStore = useExpensesStore()
@@ -19,7 +23,7 @@ onMounted(async() => {
 <template>
   <div class="app">
     <header class="app-header">
-      <h1>My Finance</h1>
+      <h1>{{ route.meta.title || "My Finance" }}</h1>
     </header>
     <div class="app-container">
       <aside class="side-navbar">
