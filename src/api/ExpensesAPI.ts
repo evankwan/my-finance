@@ -1,24 +1,43 @@
 import Database from "./services/database";
 
+import type { Category } from "../types/categories";
 import type {
 	Expense,
 	AddExpensePayload,
 	ExpenseFiltersApiPayload,
 } from "../types/expenses";
 
+type ExpenseWithCategoryTypes = Expense & {
+	category_id: Category["id"];
+	category_name: Category["name"];
+};
+
 export async function getAll(): Promise<Expense[]> {
 	const db = await Database.connect();
-	return await db.select(`
+	const results: ExpenseWithCategoryTypes[] = await db.select(`
 		SELECT 
 			expenses.id, 
 			expenses.date, 
 			expenses.title, 
 			expenses.cost, 
-			json_object('id', categories.id, 'name', categories.name) AS category
+			categories.id as category_id,
+			categories.name as category_name
 		FROM expenses
 		LEFT JOIN categories ON expenses.category = categories.id
 		ORDER BY expenses.date DESC
 	`);
+	return results.map(
+		(expense: ExpenseWithCategoryTypes) =>
+			({
+				id: expense.id,
+				date: expense.date,
+				title: expense.title,
+				cost: expense.cost,
+				category: expense.category_id
+					? { id: expense.category_id, name: expense.category_name }
+					: null,
+			}) as Expense,
+	);
 }
 export async function getAllWithFilter(
 	filters: ExpenseFiltersApiPayload,
@@ -31,17 +50,30 @@ export async function getAllWithFilter(
 	}
 	const filterQueryString = filterQueries.join(" ");
 	const db = await Database.connect();
-	return db.select(`SELECT 
+	const results: ExpenseWithCategoryTypes[] = await db.select(`SELECT 
 			expenses.id, 
 			expenses.date, 
 			expenses.title, 
 			expenses.cost, 
-			json_object('id', categories.id, 'name', categories.name) AS category
+			categories.id as category_id,
+			categories.name as category_name
 		FROM expenses
 		LEFT JOIN categories ON expenses.category = categories.id
 		${filterQueryString}
 		ORDER BY expenses.date DESC
 	`);
+	return results.map(
+		(expense: ExpenseWithCategoryTypes) =>
+			({
+				id: expense.id,
+				date: expense.date,
+				title: expense.title,
+				cost: expense.cost,
+				category: expense.category_id
+					? { id: expense.category_id, name: expense.category_name }
+					: null,
+			}) as Expense,
+	);
 }
 export async function add(expense: AddExpensePayload) {
 	const { date, title, category, cost } = expense;
@@ -60,20 +92,3 @@ export async function remove(expenseId: number) {
 	const db = await Database.connect();
 	return db.execute(`DELETE FROM expenses WHERE id = ?`, [expenseId]);
 }
-
-// export async function updateExpense(expense) {
-// 	const { category, cost, date, id, title } = expense
-
-// 	const db = await Database.connect()
-// 	await db.execute(
-// 		"UPDATE expenses SET category = ?, cost = ?, date = ?, title = ? WHERE id = ?",
-// 		[
-// 			category,
-// 			cost,
-// 			date,
-// 			title,
-// 			id,
-// 		]
-// 	)
-// 	return expense
-// }
