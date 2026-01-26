@@ -9,6 +9,6 @@ CREATE TABLE budget_categories (
   budget_id INTEGER NOT NULL,
   category_id INTEGER NOT NULL,
   amount INTEGER,
-  CONSTRAINT FK_BudgetId FOREIGN KEY (budgets) REFERENCES budgets(id) ON DELETE SET NULL,
-  CONSTRAINT FK_CategoryId FOREIGN KEY (categories) REFERENCES categories(id) ON DELETE SET NULL,
+  CONSTRAINT FK_BudgetId FOREIGN KEY (budget_id) REFERENCES budgets(id) ON DELETE CASCADE,
+  CONSTRAINT FK_CategoryId FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
