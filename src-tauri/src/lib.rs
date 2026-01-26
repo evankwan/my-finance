@@ -10,6 +10,12 @@ pub fn run() {
             sql: include_str!("./migrations/1-init.sql"),
             kind: MigrationKind::Up,
         },
+        Migration {
+            version: 2,
+            description: "add_budget_tables",
+            sql: include_str!("./migrations/2-add-budgets.sql"),
+            kind: MigrationKind::Up,
+        },
     ];
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
